@@ -10,8 +10,11 @@ public:
 	bool release();
 	bool isRun();
 
-	virtual void onCreate()=0;
-	virtual void onUpdate()=0;
+	RECT getClientWindowRect();
+	void setHWND(HWND hwnd);
+
+	virtual void onCreate();
+	virtual void onUpdate();
 	virtual void onDestroy();
 	~Window();
 protected:
