@@ -4,6 +4,8 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "VertexShader.h"
+#include "PixelShader.h"
 #include <vector>
 
 struct vec3 {
@@ -12,15 +14,19 @@ struct vec3 {
 
 struct vertex {
 	vec3 position;
+	vec3 color;
 };
 
+/*
 class Quad {
 public:
 	Quad(vertex list[], UINT size_list);
 	VertexBuffer* getVB();
 private:
 	VertexBuffer* m_vb;
+	VertexShader* m_vs;
 };
+*/
 
 class AppWindow: public Window
 {
@@ -34,6 +40,9 @@ public:
 	virtual void onDestroy() override;
 private:
 	SwapChain* m_swap_chain;
-	std::vector<Quad> quads;
+	VertexBuffer* m_vb;
+	VertexShader* m_vs;
+	PixelShader* m_ps;
+	//std::vector<Quad> quads;
 };
 
