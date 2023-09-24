@@ -57,10 +57,10 @@ void AppWindow::onCreate()
 	*/
 
 	vertex list[] = {
-		{-0.5f,-0.5f,0.0f, 0,0,0},
-		{-0.5f,0.5f,0.0f,  1,1,0},
-		{ 0.5f,-0.5f,0.0f, 0,0,1},
-		{ 0.5f,0.5f,0.0f,  1,1,1}
+		{-0.5f,-0.5f,0.0f, -0.32f,-0.11f,0.0f,  0,0,0,  0,1,0 },
+		{-0.5f,0.5f,0.0f,  -0.11f,0.78f,0.0f,   1,1,0,  0,1,1 },
+		{ 0.5f,-0.5f,0.0f, 0.75f,-0.73f,0.0f,   0,0,1,  1,0,0 },
+		{ 0.5f,0.5f,0.0f,  0.88f,0.77f,0.0f,    1,1,1,  0,0,1 }
 	};
 
 	UINT size_list = ARRAYSIZE(list);
@@ -81,6 +81,12 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
 	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::get()->releaseCompiledShader();
+
+	constant cc;
+	cc.m_angle = 0;
+
+	m_cb = GraphicsEngine::get()->createConstantBuffer();
+	m_cb->load(&cc, sizeof(constant));
 	//*/
 }
 
@@ -88,10 +94,27 @@ void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	//CLEAR THE RENDER TARGET 
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f,0.4f, 1);
+	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
+		0, 0.3f, 0.4f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
+	unsigned long new_time = 0;
+	if (m_old_time)
+		new_time = ::GetTickCount64() - m_old_time;
+	m_delta_time = new_time / 1000.0f;
+	m_old_time = ::GetTickCount64();
+
+	m_angle += 1.57f * m_delta_time;
+	constant cc;
+	cc.m_angle = m_angle;
+
+	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
+
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);

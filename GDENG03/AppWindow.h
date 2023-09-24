@@ -4,6 +4,7 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include <vector>
@@ -14,7 +15,15 @@ struct vec3 {
 
 struct vertex {
 	vec3 position;
+	vec3 position1;
 	vec3 color;
+	vec3 color1;
+};
+
+__declspec(align(16))
+struct constant
+{
+	float m_angle;
 };
 
 /*
@@ -43,6 +52,11 @@ private:
 	VertexBuffer* m_vb;
 	VertexShader* m_vs;
 	PixelShader* m_ps;
+	ConstantBuffer* m_cb;
+
+	unsigned long m_old_time = 0;
+	float m_delta_time = 0;
+	float m_angle = 0;
 	//std::vector<Quad> quads;
 };
 
