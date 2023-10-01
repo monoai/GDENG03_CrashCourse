@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "EngineTime.h"
 
 //Window* window = nullptr;
 
@@ -61,6 +62,7 @@ bool Window::init()
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
+	EngineTime::initialize();
 
 	m_is_run = true;
 	return true;
@@ -68,9 +70,9 @@ bool Window::init()
 
 bool Window::broadcast()
 {
-	MSG msg;
-
+	EngineTime::LogFrameStart();
 	this->onUpdate();
+	MSG msg;
 	
 	while (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0) {
 		TranslateMessage(&msg);
@@ -78,6 +80,7 @@ bool Window::broadcast()
 	}
 
 	Sleep(0);
+	EngineTime::LogFrameEnd();
 
 	return true;
 }

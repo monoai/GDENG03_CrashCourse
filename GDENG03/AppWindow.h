@@ -54,8 +54,10 @@ private:
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
 
-	unsigned long m_old_time = 0;
-	float m_delta_time = 0;
+	//unsigned long m_old_time = 0;
+	//float m_delta_time = 0;
+	bool reverse = false;
+	float speedFactor = 0.0f;
 	float m_angle = 0;
 	//std::vector<Quad> quads;
 };

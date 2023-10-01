@@ -1,4 +1,5 @@
 #include "AppWindow.h"
+#include "EngineTime.h"
 #include <array>
 
 AppWindow::AppWindow()
@@ -100,15 +101,29 @@ void AppWindow::onUpdate()
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
+	/*
 	unsigned long new_time = 0;
 	if (m_old_time)
 		new_time = ::GetTickCount64() - m_old_time;
 	m_delta_time = new_time / 1000.0f;
 	m_old_time = ::GetTickCount64();
+	*/
 
-	m_angle += 1.57f * m_delta_time;
+	if (this->speedFactor <= 0.1f || this->reverse == false) {
+		this->reverse = false;
+		this->speedFactor += EngineTime::getDeltaTime();
+	}
+	if (this->speedFactor >= 10.0f || this->reverse == true) {
+		this->reverse = true;
+		this->speedFactor -= EngineTime::getDeltaTime();
+	}
+
+	m_angle += (1.57f * EngineTime::getDeltaTime()) * this->speedFactor;
 	constant cc;
 	cc.m_angle = m_angle;
+
+	//std::cout << "DT: " << EngineTime::getDeltaTime() << std::endl;
+	std::cout << "speed: " << this->speedFactor << std::endl;
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
 
