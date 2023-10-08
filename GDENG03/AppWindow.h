@@ -7,23 +7,30 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Vector3D.h"
+#include "Matrix4x4.h"
 #include <vector>
 
+/*
 struct vec3 {
 	float x, y, z;
 };
+*/
 
 struct vertex {
-	vec3 position;
-	vec3 position1;
-	vec3 color;
-	vec3 color1;
+	Vector3D position;
+	Vector3D position1;
+	Vector3D color;
+	Vector3D color1;
 };
 
 __declspec(align(16))
 struct constant
 {
-	float m_angle;
+	Matrix4x4 m_world;
+	Matrix4x4 m_view;
+	Matrix4x4 m_proj;
+	unsigned int m_time;
 };
 
 /*
@@ -41,6 +48,9 @@ class AppWindow: public Window
 {
 public:
 	AppWindow();
+
+	void updateQuadPosition();
+
 	~AppWindow();
 
 	// Inherited via Window
@@ -57,8 +67,11 @@ private:
 	//unsigned long m_old_time = 0;
 	//float m_delta_time = 0;
 	bool reverse = false;
-	float speedFactor = 0.0f;
+	float speedFactor = 1.0f;
 	float m_angle = 0;
+	float m_delta_pos;
+	float m_delta_scale;
+	float m_delta_rot;
 	//std::vector<Quad> quads;
 };
 
