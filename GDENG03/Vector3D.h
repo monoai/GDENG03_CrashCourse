@@ -22,6 +22,12 @@ public:
 		return v;
 	}
 
+	const Vector3D getValues() {
+		Vector3D vect(this->m_x, this->m_y, this->m_z);
+
+		return vect;
+	}
+
 
 	~Vector3D()
 	{

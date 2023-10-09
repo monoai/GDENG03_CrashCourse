@@ -5,21 +5,16 @@
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
 #include "ConstantBuffer.h"
+#include "IndexBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Vector3D.h"
 #include "Matrix4x4.h"
+#include "Cube.h"
 #include <vector>
-
-/*
-struct vec3 {
-	float x, y, z;
-};
-*/
 
 struct vertex {
 	Vector3D position;
-	Vector3D position1;
 	Vector3D color;
 	Vector3D color1;
 };
@@ -63,6 +58,9 @@ private:
 	VertexShader* m_vs;
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
+	IndexBuffer* m_ib;
+
+	std::vector<Cube*> cubeList;
 
 	//unsigned long m_old_time = 0;
 	//float m_delta_time = 0;
@@ -72,6 +70,9 @@ private:
 	float m_delta_pos;
 	float m_delta_scale;
 	float m_delta_rot;
+	float m_delta_time;
 	//std::vector<Quad> quads;
+
+	
 };
 

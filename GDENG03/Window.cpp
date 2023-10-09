@@ -62,8 +62,6 @@ bool Window::init()
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
-	EngineTime::initialize();
-
 	m_is_run = true;
 	return true;
 }

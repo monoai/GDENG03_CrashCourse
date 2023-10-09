@@ -35,9 +35,12 @@ void ConstantBuffer::update(DeviceContext* context, void* buffer)
 
 bool ConstantBuffer::release()
 {
-	if (m_buffer)m_buffer->Release();
-	delete this;
-	return true;
+	if (this != NULL) {
+		if (m_buffer)m_buffer->Release();
+		delete this;
+		return true;
+	}
+	return false;
 }
 
 ConstantBuffer::~ConstantBuffer()
