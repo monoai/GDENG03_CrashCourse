@@ -33,6 +33,7 @@ public:
 
 	struct vertex {
 		Vector3D position;
+		Vector3D position1;
 		Vector3D color;
 		Vector3D color1;
 	};
@@ -42,7 +43,7 @@ public:
 		Matrix4x4 m_world;
 		Matrix4x4 m_view;
 		Matrix4x4 m_proj;
-		float m_time;
+		float m_time = 0.0f;
 	};
 
 protected:

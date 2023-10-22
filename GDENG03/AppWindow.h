@@ -16,6 +16,7 @@
 
 struct vertex {
 	Vector3D position;
+	Vector3D position1;
 	Vector3D color;
 	Vector3D color1;
 };
@@ -26,7 +27,7 @@ struct constant
 	Matrix4x4 m_world;
 	Matrix4x4 m_view;
 	Matrix4x4 m_proj;
-	unsigned int m_time;
+	float m_time = 0.0f;
 };
 
 /*
@@ -82,6 +83,9 @@ private:
 	float m_delta_scale;
 	float m_delta_rot;
 	float m_delta_time;
+
+	float m_x = 0.0f;
+	float m_y = 0.0f;
 
 	/* // from following the tutorial
 	float m_rot_x = 0.0f;

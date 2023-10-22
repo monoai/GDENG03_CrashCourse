@@ -40,15 +40,17 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
-	std::uniform_real_distribution<> posVal(-2.00, 2.00);
+	std::uniform_real_distribution<> posVal(-0.50, 0.50);
 	std::uniform_real_distribution<> speedVal(-5.0, 5.00);
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 4; i++) {
 		Cube* cubeObject = new Cube("Cube", shader_byte_code, size_shader);
 
-		cubeObject->setAnimSpeed(speedVal(rng));
-		cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
-		cubeObject->setScale(Vector3D(1.0, 1.0, 1.0));
+		//cubeObject->setAnimSpeed(speedVal(rng));
+		//cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
+		cubeObject->setAnimSpeed(3.0f);
+		cubeObject->setPosition(Vector3D(0.0f, 0.0f, 0.0f));
+		cubeObject->setScale(Vector3D(0.5, 0.5, 0.5));
 		this->cubeList.push_back(cubeObject);
 		//std::cout << "Created" << std::endl;
 	}
@@ -78,7 +80,23 @@ void AppWindow::onUpdate()
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
-
+	/*
+	if (this->m_x <= -1.0f || this->reverse == false) {
+		this->reverse = false;
+		this->m_x += EngineTime::getDeltaTime();
+		this->m_y += EngineTime::getDeltaTime();
+	}
+	if (this->m_x >= 1.0f || this->reverse == true) {
+		this->reverse = true;
+		this->m_x -= EngineTime::getDeltaTime();
+		this->m_y -= EngineTime::getDeltaTime();
+	}
+	*/
+	this->cubeList[0]->setPosition(Vector3D(-1.5, 0.0, -3.0f));
+	this->cubeList[1]->setPosition(Vector3D(0.0, 0.0, 0.0f));
+	this->cubeList[2]->setPosition(Vector3D(2.6, 0.0, 2.0f));
+	this->cubeList[3]->setPosition(Vector3D(0.0, -1.0, 0.0f));
+	this->cubeList[3]->setScale(Vector3D(5.0f,0.0f,5.0f));
 	for (int i = 0; i < this->cubeList.size(); i++) {
 		this->cubeList[i]->update(EngineTime::getDeltaTime());
 		this->cubeList[i]->draw(rc.right - rc.left, rc.bottom - rc.top, this->m_vs, this->m_ps);
