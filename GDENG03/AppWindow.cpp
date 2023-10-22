@@ -1,5 +1,7 @@
 #include "AppWindow.h"
 #include "EngineTime.h"
+#include "InputSystem.h"
+#include "SceneCameraHandler.h"
 #include <array>
 #include <random>
 #include <algorithm>
@@ -14,55 +16,6 @@ AppWindow::AppWindow()
 {
 }
 
-void AppWindow::updateQuadPosition()
-{
-	constant cc;
-	cc.m_time = EngineTime::getDeltaTime();
-
-	m_delta_pos += EngineTime::getDeltaTime() / 10.0f;
-	if (m_delta_pos > 1.0f)
-		m_delta_pos = 0;
-
-	Matrix4x4 temp;
-
-	m_delta_scale += EngineTime::getDeltaTime() / 0.55f;
-
-	//cc.m_world.setScale(Vector3D::lerp(Vector3D(0.5, 0.5, 0), Vector3D(1.0f, 1.0f, 0), (sin(m_delta_scale) + 1.0f) / 2.0f));
-
-	//temp.setTranslation(Vector3D::lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_delta_pos));
-
-	//cc.m_world *= temp;
-	cc.m_world.setScale(Vector3D(1, 1, 1));
-
-	temp.setIdentity();
-	temp.setRotationZ(m_delta_scale);
-	cc.m_world *= temp;
-
-	temp.setIdentity();
-	temp.setRotationY(m_delta_scale);
-	cc.m_world *= temp;
-
-	temp.setIdentity();
-	temp.setRotationX(m_delta_scale);
-	cc.m_world *= temp;
-
-
-	cc.m_view.setIdentity();
-	cc.m_proj.setOrthoLH
-	(
-		(this->getClientWindowRect().right - this->getClientWindowRect().left) / 300.0f,
-		(this->getClientWindowRect().bottom - this->getClientWindowRect().top) / 300.0f,
-		-4.0f,
-		4.0f
-	);
-
-	//std::cout << "cc m_time: " << cc.m_time << std::endl;
-	//std::cout << "cc m_pos: " << m_delta_scale << std::endl;
-	//std::cout << "cc m_scale: " << m_delta_scale << std::endl;
-
-	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
-}
-
 AppWindow::~AppWindow()
 {
 }
@@ -70,6 +23,10 @@ AppWindow::~AppWindow()
 void AppWindow::onCreate()
 {
 	Window::onCreate();
+	
+	InputSystem::initialize();
+	//InputSystem::getInstance()->addListener(this);
+
 	EngineTime::initialize();
 	GraphicsEngine::get()->init();
 	m_swap_chain = GraphicsEngine::get()->createSwapChain();
@@ -83,16 +40,17 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
-	std::uniform_real_distribution<> rngVal(-0.65, 0.65);
+	std::uniform_real_distribution<> posVal(-2.00, 2.00);
 	std::uniform_real_distribution<> speedVal(-5.0, 5.00);
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10; i++) {
 		Cube* cubeObject = new Cube("Cube", shader_byte_code, size_shader);
+
 		cubeObject->setAnimSpeed(speedVal(rng));
-		cubeObject->setPosition(Vector3D(rngVal(rng), rngVal(rng), 0.0f));
-		cubeObject->setScale(Vector3D(0.25, 0.25, 0.25));
+		cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
+		cubeObject->setScale(Vector3D(1.0, 1.0, 1.0));
 		this->cubeList.push_back(cubeObject);
-		std::cout << "Created" << std::endl;
+		//std::cout << "Created" << std::endl;
 	}
 
 	// only release if you're done compiling shaders
@@ -105,85 +63,16 @@ void AppWindow::onCreate()
 
 	GraphicsEngine::get()->releaseCompiledShader();
 
-	/*
-	vertex vertex_list[] =
-	{
-		//X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,0,0),  Vector3D(0.2f,0,0) },
-		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,0), Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,0),  Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1,0,0), Vector3D(0.2f,0,0) },
-
-		//BACK FACE
-		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(0,1,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(0,1,1),  Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(0,1,0), Vector3D(0,0.2f,0) }
-
-	};
-
-	m_vb = GraphicsEngine::get()->createVertexBuffer();
-	UINT size_list = ARRAYSIZE(vertex_list);
-
-
-	unsigned int index_list[] =
-	{
-		//FRONT SIDE
-		0,1,2,  //FIRST TRIANGLE
-		2,3,0,  //SECOND TRIANGLE
-		//BACK SIDE
-		4,5,6,
-		6,7,4,
-		//TOP SIDE
-		1,6,5,
-		5,2,1,
-		//BOTTOM SIDE
-		7,0,3,
-		3,4,7,
-		//RIGHT SIDE
-		3,2,5,
-		5,4,3,
-		//LEFT SIDE
-		7,6,1,
-		1,0,7
-	};
-
-
-	m_ib = GraphicsEngine::get()->createIndexBuffer();
-	UINT size_index_list = ARRAYSIZE(index_list);
-
-	m_ib->load(index_list, size_index_list);
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
-	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
-	m_vb->load(vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
-
-	GraphicsEngine::get()->releaseCompiledShader();
-
-
-	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
-	GraphicsEngine::get()->releaseCompiledShader();
-
-	constant cc;
-	cc.m_time = 0;
-
-	m_cb = GraphicsEngine::get()->createConstantBuffer();
-	m_cb->load(&cc, sizeof(constant));
-	*/
+	SceneCameraHandler::initialize();
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
+	InputSystem::getInstance()->update();
 	// remember to set the shaders first else null errors
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
-
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
 
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
@@ -197,9 +86,9 @@ void AppWindow::onUpdate()
 		//std::cout << "updating cubes" << std::endl;
 	}
 
-	m_swap_chain->present(true);
+	SceneCameraHandler::getInstance()->update();
 
-	//updateQuadPosition();
+	m_swap_chain->present(true);
 
 	/*
 
@@ -238,17 +127,70 @@ void AppWindow::onDestroy()
 		quads[i].getVB()->release();
 	}
 	*/
+	InputSystem::getInstance()->removeListener(this);
+	InputSystem::getInstance()->destroy();
 	m_vb->release();
 	m_ib->release();
 	m_cb->release();
 	m_swap_chain->release();
 	m_vs->release();
 	m_ps->release();
+	SceneCameraHandler::destroy();
 	GraphicsEngine::get()->release();
 }
 
-/*
+void AppWindow::onFocus()
+{
+	InputSystem::getInstance()->addListener(this);
+}
 
+void AppWindow::onKillFocus()
+{
+	InputSystem::getInstance()->removeListener(this);
+}
+
+void AppWindow::onKeyDown(int key)
+{
+	if (key == 'W') {
+		std::cout << "Key W pressed down" << std::endl;
+	}
+}
+
+void AppWindow::onKeyUp(int key)
+{
+	if (key == 'W') {
+		std::cout << "Key W pressed up" << std::endl;
+	}
+}
+
+void AppWindow::onMouseMove(const Point mouse_pos)
+{
+
+}
+
+void AppWindow::onLeftMouseDown(const Point mouse_pos)
+{
+	std::cout << "Left mouse down" << std::endl;
+}
+
+void AppWindow::onLeftMouseUp(const Point mouse_pos)
+{
+	std::cout << "Left mouse up" << std::endl;
+}
+
+void AppWindow::onRightMouseDown(const Point mouse_pos)
+{
+	std::cout << "Right mouse down" << std::endl;
+	//rmouseClick = true;
+}
+
+void AppWindow::onRightMouseUp(const Point mouse_pos)
+{
+	std::cout << "Right mouse up" << std::endl;
+	//rmouseClick = false;
+}
+
+/*
 Quad::Quad(vertex list[], UINT size_list)
 {
 	m_vb = GraphicsEngine::get()->createVertexBuffer();

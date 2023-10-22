@@ -6,14 +6,14 @@
 class VertexShader;
 class PixelShader;
 
-class GameObject
+class AGameObject
 {
 public:
-	GameObject(std::string name);
-	~GameObject();
+	AGameObject(std::string name);
+	~AGameObject();
 
 	virtual void update(float deltaTime) = 0;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) = 0;
+	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader);
 
 	void setPosition(float x, float y, float z);
 	void setPosition(Vector3D pos);
@@ -42,7 +42,7 @@ public:
 		Matrix4x4 m_world;
 		Matrix4x4 m_view;
 		Matrix4x4 m_proj;
-		float time;
+		float m_time;
 	};
 
 protected:

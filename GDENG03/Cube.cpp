@@ -1,8 +1,10 @@
 #include "Cube.h"
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
+#include "SceneCameraHandler.h"
+#include "InputSystem.h"
 
-Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : GameObject(name)
+Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : AGameObject(name)
 {
 	vertex quadList[] = {
 		//FRONT FACE
@@ -45,8 +47,8 @@ Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : GameObje
 	this->indexBuffer = GraphicsEngine::get()->createIndexBuffer();
 	this->indexBuffer->load(indexList, ARRAYSIZE(indexList));
 
-	constant cc = {};
-	cc.time = 0;
+	constant cc;
+	cc.m_time = 0;
 	this->constantBuffer = GraphicsEngine::get()->createConstantBuffer();
 	this->constantBuffer->load(&cc, sizeof(constant));
 }
@@ -55,21 +57,29 @@ Cube::~Cube()
 {
 	this->vertexBuffer->release();
 	this->indexBuffer->release();
-	GameObject::~GameObject();
+	AGameObject::~AGameObject();
 }
 
 void Cube::update(float deltaTime)
 {
 	this->deltaTime = deltaTime;
-	this->ticks += deltaTime;
+	if (InputSystem::getInstance()->isKeyDown('W')) {
+		this->ticks += deltaTime;
 
-	float rotSpeed = this->ticks * this->speed;
-	this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+		float rotFactor = this->ticks * this->speed;
+		this->setRotation(rotFactor, rotFactor, rotFactor);
+	}
+	else if (InputSystem::getInstance()->isKeyDown('S')) {
+		this->ticks -= deltaTime;
+
+		float rotSpeed = this->ticks * this->speed;
+		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+	}
 }
 
 void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
 {
-	constant cc = {};
+	constant cc;
 
 	if (this->deltaPos > 1.0f) {
 		this->deltaPos = 0.0f;
@@ -88,19 +98,25 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 	scaleMat.setScale(this->getLocalScale());
 
 	Vector3D rotation = this->getLocalRotation();
-	Matrix4x4 zMat; zMat.setRotationZ(rotation.getValues().m_z);
-	Matrix4x4 xMat; xMat.setRotationX(rotation.getValues().m_x);
-	Matrix4x4 yMat; yMat.setRotationY(rotation.getValues().m_y);
+	Matrix4x4 zMat; zMat.setRotationZ(rotation.getValues().getZ());
+	Matrix4x4 xMat; xMat.setRotationX(rotation.getValues().getX());
+	Matrix4x4 yMat; yMat.setRotationY(rotation.getValues().getY());
 
 	Matrix4x4 rotMat;
 	rotMat.setIdentity();
+
 	rotMat = rotMat.multiply(xMat.multiply(yMat.multiply(zMat)));
 	transMat = transMat.multiply(scaleMat.multiply(rotMat));
 	transMat = transMat.multiply(translateMat);
 	cc.m_world = transMat;
+	cc.m_time += this->deltaTime;
 
-	cc.m_view.setIdentity();
-	cc.m_proj.setOrthoLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
+	Matrix4x4 cameraMatrix = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
+	cc.m_view = cameraMatrix;
+
+	//cc.m_view.setIdentity();
+	//cc.m_proj.setOrthoLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
+	cc.m_proj.setPerspectiveFovLH((float)width / (float)height, (float)width / (float)height, 0.1f, 1000.0f);
 
 	this->constantBuffer->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(vertexShader, this->constantBuffer);

@@ -13,6 +13,31 @@ public:
 	{
 	}
 
+	float getX() const
+	{
+		return this->m_x;
+	}
+
+	float getY() const
+	{
+		return this->m_y;
+	}
+
+	float getZ() const
+	{
+		return this->m_z;
+	}
+
+	Vector3D operator*(float num)
+	{
+		return Vector3D(this->m_x * num, this->m_y * num, this->m_z * num);
+	}
+
+	Vector3D operator+(Vector3D vec)
+	{
+		return Vector3D(this->m_x + vec.m_x, this->m_y + vec.m_y, this->m_z + vec.m_z);
+	}
+
 	static Vector3D lerp(const Vector3D& start, const Vector3D& end, float delta)
 	{
 		Vector3D v;
@@ -28,11 +53,10 @@ public:
 		return vect;
 	}
 
-
 	~Vector3D()
 	{
 	}
 
-public:
+private:
 	float m_x, m_y, m_z;
 };

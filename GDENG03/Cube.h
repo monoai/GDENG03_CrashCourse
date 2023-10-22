@@ -1,11 +1,11 @@
 #pragma once
-#include "GameObject.h"
+#include "AGameObject.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 
-class Cube : public GameObject
+class Cube : public AGameObject
 {
 public:
 	Cube(std::string name, void* shaderByteCode, size_t sizeShader);
