@@ -37,7 +37,7 @@ void InputSystem::addListener(InputListener* listener)
 void InputSystem::removeListener(InputListener* listener)
 {
 	int index = -1;
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		if (this->inputListenerList[i] == listener) {
 			index = i;
 			break;
@@ -131,49 +131,49 @@ bool InputSystem::isKeyUp(int key)
 
 void InputSystem::callOnKeyDown(int key)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onKeyDown(key);
 	}
 }
 
 void InputSystem::callOnKeyUp(int key)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onKeyUp(key);
 	}
 }
 
 void InputSystem::callOnMouseMove(Point deltaPt)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onMouseMove(deltaPt);
 	}
 }
 
 void InputSystem::callOnLeftMouseDown(Point deltaPt)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onLeftMouseDown(deltaPt);
 	}
 }
 
 void InputSystem::callOnLeftMouseUp(Point deltaPt)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onLeftMouseUp(deltaPt);
 	}
 }
 
 void InputSystem::callOnRightMouseDown(Point deltaPt)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onRightMouseDown(deltaPt);
 	}
 }
 
 void InputSystem::callOnRightMouseUp(Point deltaPt)
 {
-	for (int i = 0; i < this->inputListenerList.size(); i++) {
+	for (unsigned int i = 0; i < this->inputListenerList.size(); i++) {
 		this->inputListenerList[i]->onRightMouseUp(deltaPt);
 	}
 }

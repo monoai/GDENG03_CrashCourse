@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <cmath>
 #include "Vector3D.h"
 #include "Vector4D.h"
 
@@ -102,10 +103,10 @@ public:
 			}
 			v.cross(vec[0], vec[1], vec[2]);
 
-			out.m_mat[0][i] = pow(-1.0f, i) * v.m_x / det;
-			out.m_mat[1][i] = pow(-1.0f, i) * v.m_y / det;
-			out.m_mat[2][i] = pow(-1.0f, i) * v.m_z / det;
-			out.m_mat[3][i] = pow(-1.0f, i) * v.m_w / det;
+			out.m_mat[0][i] = pow((float)-1.0f, (float)i) * v.m_x / det;
+			out.m_mat[1][i] = pow((float)-1.0f, (float)i) * v.m_y / det;
+			out.m_mat[2][i] = pow((float)-1.0f, (float)i) * v.m_z / det;
+			out.m_mat[3][i] = pow((float)-1.0f, (float)i) * v.m_w / det;
 		}
 
 		this->setMatrix(out);

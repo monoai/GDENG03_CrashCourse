@@ -12,6 +12,9 @@
 #include "Matrix4x4.h"
 #include "InputListener.h"
 #include "Cube.h"
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 #include <vector>
 
 struct vertex {
@@ -29,17 +32,6 @@ struct constant
 	Matrix4x4 m_proj;
 	float m_time = 0.0f;
 };
-
-/*
-class Quad {
-public:
-	Quad(vertex list[], UINT size_list);
-	VertexBuffer* getVB();
-private:
-	VertexBuffer* m_vb;
-	VertexShader* m_vs;
-};
-*/
 
 class AppWindow: public Window, public InputListener
 {
@@ -97,6 +89,6 @@ private:
 	*/
 
 	//bool rmouseClick = false;
-	//std::vector<Quad> quads;
+private:
 };
 

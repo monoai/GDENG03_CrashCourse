@@ -29,6 +29,8 @@ public:
 
 	bool release();
 	~DeviceContext();
+public:
+	ID3D11DeviceContext* getDeviceContext();
 private:
 	ID3D11DeviceContext* m_device_context;
 private:
