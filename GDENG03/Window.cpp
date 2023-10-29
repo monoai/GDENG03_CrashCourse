@@ -1,13 +1,22 @@
 #include "Window.h"
 #include "EngineTime.h"
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 
 //Window* window = nullptr;
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 Window::Window()
 {
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+		return true;
+	// (Your code process Win32 messages)
+
 	switch (msg) {
 		case WM_CREATE: {
 			Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;

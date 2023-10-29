@@ -8,7 +8,7 @@ public:
 	Camera(std::string name);
 	~Camera();
 
-	void update(float deltaTime) override;
+	void update(double deltaTime) override;
 	Matrix4x4 getViewMatrix();
 
 	virtual void onKeyDown(int key) override;

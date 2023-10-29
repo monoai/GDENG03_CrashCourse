@@ -60,7 +60,7 @@ Cube::~Cube()
 	AGameObject::~AGameObject();
 }
 
-void Cube::update(float deltaTime)
+void Cube::update(double deltaTime)
 {
 	this->deltaTime = deltaTime;
 	/*

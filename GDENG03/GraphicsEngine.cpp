@@ -125,6 +125,11 @@ PixelShader* GraphicsEngine::createPixelShader(const void* shader_byte_code, siz
     return ps;
 }
 
+ID3D11Device* GraphicsEngine::getd3dDevice()
+{
+    return this->m_d3d_device;
+}
+
 bool GraphicsEngine::compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size)
 {
     ID3DBlob* error_blob = nullptr;

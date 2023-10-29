@@ -13,7 +13,7 @@ Camera::~Camera()
 	InputSystem::getInstance()->removeListener(this);
 }
 
-void Camera::update(float deltaTime)
+void Camera::update(double deltaTime)
 {
 	Vector3D localPos = this->getLocalPosition();
 	float x = localPos.getX();
@@ -22,22 +22,22 @@ void Camera::update(float deltaTime)
 	float moveSpeed = 10.0f;
 
 	if (InputSystem::getInstance()->isKeyDown('W')) {
-		z += deltaTime * moveSpeed;
+		z += (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('S')) {
-		z -= deltaTime * moveSpeed;
+		z -= (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('A')) {
-		x += deltaTime * moveSpeed;
+		x += (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		this->updateViewMatrix();
 	}
 	else if (InputSystem::getInstance()->isKeyDown('D')) {
-		x -= deltaTime * moveSpeed;
+		x -= (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		//std::cout << "x: " << x << std::endl;
 		this->updateViewMatrix();

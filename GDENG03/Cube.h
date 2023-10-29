@@ -11,7 +11,7 @@ public:
 	Cube(std::string name, void* shaderByteCode, size_t sizeShader);
 	~Cube();
 
-	void update(float deltaTime) override;
+	void update(double deltaTime) override;
 	void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
 	void setAnimSpeed(float speed);
 
@@ -21,7 +21,7 @@ private:
 	ConstantBuffer* constantBuffer;
 	float ticks = 0.0f;
 	float colorTick = 0.0f;
-	float deltaTime = 0.0f;
+	double deltaTime = 0.0f;
 	float speed = 10.0f;
 };
 
