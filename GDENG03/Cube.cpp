@@ -63,13 +63,10 @@ Cube::~Cube()
 void Cube::update(double deltaTime)
 {
 	this->deltaTime = deltaTime;
-	/*
 	this->ticks += deltaTime;
 
 	float rotFactor = this->ticks * this->speed;
 	this->setRotation(rotFactor, rotFactor, rotFactor);
-	*/
-	
 }
 
 void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
@@ -107,8 +104,8 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 
 	colorTick += (float)(this->deltaTime) * 0.5f;
 	cc.m_time = (float)colorTick;
-	std::cout << "colorTick: " << colorTick << std::endl;
-	std::cout << "cc time: " << cc.m_time << std::endl;
+	//std::cout << "colorTick: " << colorTick << std::endl;
+	//std::cout << "cc time: " << cc.m_time << std::endl;
 	//std::cout << "dT: " << this->deltaTime << std::endl;
 
 	this->constantBuffer->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);

@@ -1,5 +1,6 @@
 #pragma once
 #include <d3d11.h>
+#include "imgui.h"
 
 class SwapChain;
 class VertexBuffer;
@@ -13,6 +14,7 @@ class DeviceContext
 public:
 	DeviceContext(ID3D11DeviceContext* device_context);
 	void clearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
+	void clearRenderTargetColor(SwapChain* swap_chain, ImVec4 color);
 	void setVertexBuffer(VertexBuffer* vertex_buffer);
 	void setIndexBuffer(IndexBuffer* index_buffer);
 

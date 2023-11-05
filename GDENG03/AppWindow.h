@@ -90,5 +90,14 @@ private:
 
 	//bool rmouseClick = false;
 private:
+	bool demoCheck = false;
+	bool playAnim = true;
+	/*
+	float red = 0.0f;
+	float green = 0.3f;
+	float blue = 0.4f;
+	float alpha = 1.0f;
+	*/
+	ImVec4 color = ImVec4(0.0f, 0.3f, 0.4f, 1.0f);
 };
 

@@ -53,16 +53,16 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
-	std::uniform_real_distribution<> posVal(-0.50, 0.50);
+	std::uniform_real_distribution<> posVal(-1.50, 1.50);
 	std::uniform_real_distribution<> speedVal(-5.0, 5.00);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 50; i++) {
 		Cube* cubeObject = new Cube("Cube", shader_byte_code, size_shader);
 
-		//cubeObject->setAnimSpeed(speedVal(rng));
-		//cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
-		cubeObject->setAnimSpeed(3.0f);
-		cubeObject->setPosition(Vector3D(0.0f, 0.0f, 0.0f));
+		cubeObject->setAnimSpeed(speedVal(rng));
+		cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
+		//cubeObject->setAnimSpeed(3.0f);
+		//cubeObject->setPosition(Vector3D(0.0f, 0.0f, 0.0f));
 		cubeObject->setScale(Vector3D(0.5, 0.5, 0.5));
 		this->cubeList.push_back(cubeObject);
 		//std::cout << "Created" << std::endl;
@@ -88,38 +88,53 @@ void AppWindow::onUpdate()
 	// remember to set the shaders first else null errors
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
+	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, color);
 
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	// (Your code process and dispatch Win32 messages)
+
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	ImGui::ShowDemoWindow(); // Show demo window! :)
-	/*
-	if (this->m_x <= -1.0f || this->reverse == false) {
-		this->reverse = false;
-		this->m_x += EngineTime::getDeltaTime();
-		this->m_y += EngineTime::getDeltaTime();
+	if(demoCheck == true) {
+		ImGui::ShowDemoWindow(); // Show demo window! :)
 	}
-	if (this->m_x >= 1.0f || this->reverse == true) {
-		this->reverse = true;
-		this->m_x -= EngineTime::getDeltaTime();
-		this->m_y -= EngineTime::getDeltaTime();
-	}
-	*/
+	// TODO: add a better way to make windows here
+	///*
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		const ImGuiViewport* main_viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x + 100, main_viewport->WorkPos.y + 20), ImGuiCond_None);
+		ImGui::SetNextWindowSize(ImVec2(350, 300), ImGuiCond_None);
 
-	this->cubeList[0]->setPosition(Vector3D(-1.5f, 0.0f, -3.0f));
-	this->cubeList[1]->setPosition(Vector3D(0.0f, 0.0f, 0.0f));
-	this->cubeList[2]->setPosition(Vector3D(2.6f, 0.0f, 2.0f));
-	this->cubeList[3]->setPosition(Vector3D(0.0f, -1.0f, 0.0f));
-	this->cubeList[3]->setScale(Vector3D(5.0f,0.0f,5.0f));
+		if (!ImGui::Begin("Scene Settings", NULL, window_flags))
+		{
+			// Early out if the window is collapsed, as an optimization.
+			ImGui::End();
+			return;
+		}
+
+		ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
+		ImGui::Text("Below are settings for configuring the Scene");
+		
+		ImGui::Checkbox("Show Demo Window", &demoCheck);
+		ImGui::ColorEdit3("clear color", (float*)&color);
+		if (ImGui::Button(playAnim ? "Pause Animation" : "Resume Animation")) {
+			playAnim = !playAnim;
+			std::cout << "play anim is now: " << playAnim << std::endl;
+		}
+
+		ImGui::End();
+	//*/
+
 	for (unsigned int i = 0; i < this->cubeList.size(); i++) {
-		this->cubeList[i]->update(EngineTime::getDeltaTime());
+		if (playAnim) {
+			this->cubeList[i]->update(EngineTime::getDeltaTime());
+		}
 		this->cubeList[i]->draw(rc.right - rc.left, rc.bottom - rc.top, this->m_vs, this->m_ps);
 		
 		//std::cout << "updating cubes" << std::endl;
