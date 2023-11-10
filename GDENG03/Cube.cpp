@@ -4,7 +4,7 @@
 #include "SceneCameraHandler.h"
 #include "InputSystem.h"
 
-Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : AGameObject(name)
+Cube::Cube(std::string name, void* shader_byte_code, size_t size_shader) : AGameObject(name)
 {
 	vertex quadList[] = {
 		//FRONT FACE
@@ -20,8 +20,8 @@ Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : AGameObj
 		{Vector3D(-0.75f,-0.75f,0.75f),Vector3D(-0.75f,-0.75f,0.75f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 	};
 
-	this->vertexBuffer = GraphicsEngine::get()->createVertexBuffer();
-	this->vertexBuffer->load(quadList, sizeof(vertex), ARRAYSIZE(quadList), shaderByteCode, sizeShader);
+	this->m_vb = GraphicsEngine::get()->createVertexBuffer();
+	this->m_vb->load(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
 
 	unsigned int indexList[] =
 	{
@@ -44,19 +44,19 @@ Cube::Cube(std::string name, void* shaderByteCode, size_t sizeShader) : AGameObj
 		7,6,1,
 		1,0,7
 	};
-	this->indexBuffer = GraphicsEngine::get()->createIndexBuffer();
-	this->indexBuffer->load(indexList, ARRAYSIZE(indexList));
+	this->m_ib = GraphicsEngine::get()->createIndexBuffer();
+	this->m_ib->load(indexList, ARRAYSIZE(indexList));
 
 	constant cc;
 	cc.m_time = 0.0f;
-	this->constantBuffer = GraphicsEngine::get()->createConstantBuffer();
-	this->constantBuffer->load(&cc, sizeof(constant));
+	this->m_cb = GraphicsEngine::get()->createConstantBuffer();
+	this->m_cb->load(&cc, sizeof(constant));
 }
 
 Cube::~Cube()
 {
-	this->vertexBuffer->release();
-	this->indexBuffer->release();
+	this->m_vb->release();
+	this->m_ib->release();
 	AGameObject::~AGameObject();
 }
 
@@ -65,11 +65,11 @@ void Cube::update(double deltaTime)
 	this->deltaTime = deltaTime;
 	this->ticks += deltaTime;
 
-	float rotFactor = this->ticks * this->speed;
-	this->setRotation(rotFactor, rotFactor, rotFactor);
+	//float rotFactor = this->ticks * this->speed;
+	//this->setRotation(rotFactor, rotFactor, rotFactor);
 }
 
-void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Cube::draw(int width, int height, VertexShader* m_vs, PixelShader* m_ps)
 {
 	constant cc;
 
@@ -108,14 +108,14 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 	//std::cout << "cc time: " << cc.m_time << std::endl;
 	//std::cout << "dT: " << this->deltaTime << std::endl;
 
-	this->constantBuffer->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(vertexShader, this->constantBuffer);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(pixelShader, this->constantBuffer);
+	this->m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_vs, this->m_cb);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, this->m_cb);
 	
-	GraphicsEngine::get()->getImmediateDeviceContext()->setIndexBuffer(this->indexBuffer);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(this->vertexBuffer);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(this->m_vb);
 	
-	GraphicsEngine::get()->getImmediateDeviceContext()->drawIndexedTriangleList(this->indexBuffer->getSizeIndexList(), 0, 0);
+	GraphicsEngine::get()->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
 void Cube::setAnimSpeed(float speed)

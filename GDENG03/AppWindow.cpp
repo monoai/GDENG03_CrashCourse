@@ -2,6 +2,8 @@
 #include "EngineTime.h"
 #include "InputSystem.h"
 #include "SceneCameraHandler.h"
+#include "UIManager.h"
+#include "GameObjectManager.h"
 #include <array>
 #include <random>
 #include <algorithm>
@@ -24,10 +26,6 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 	
-	InputSystem::initialize();
-	//InputSystem::getInstance()->addListener(this);
-
-	EngineTime::initialize();
 	GraphicsEngine::get()->init();
 	m_swap_chain = GraphicsEngine::get()->createSwapChain();
 	
@@ -36,9 +34,9 @@ void AppWindow::onCreate()
 
 	// imgui init
 	// Setup Dear ImGui context
+	/*
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
@@ -46,6 +44,7 @@ void AppWindow::onCreate()
 	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(this->m_hwnd);
 	ImGui_ImplDX11_Init(GraphicsEngine::get()->getd3dDevice(), GraphicsEngine::get()->getImmediateDeviceContext()->getDeviceContext());
+	*/
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -53,6 +52,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
+	/*
 	std::uniform_real_distribution<> posVal(-1.50, 1.50);
 	std::uniform_real_distribution<> speedVal(-5.0, 5.00);
 
@@ -67,6 +67,7 @@ void AppWindow::onCreate()
 		this->cubeList.push_back(cubeObject);
 		//std::cout << "Created" << std::endl;
 	}
+	*/
 
 	// only release if you're done compiling shaders
 	GraphicsEngine::get()->releaseCompiledShader();
@@ -78,7 +79,23 @@ void AppWindow::onCreate()
 
 	GraphicsEngine::get()->releaseCompiledShader();
 
+	// Initialize systems
+	InputSystem::initialize();
+	//InputSystem::getInstance()->addListener(this);
+	GameObjectManager::initialize();
+	EngineTime::initialize();
 	SceneCameraHandler::initialize();
+
+	UIManager::initialize(m_hwnd);
+	UINames names;
+	ToolbarScreen* toolscreen = new ToolbarScreen(names.MENU_SCREEN);
+	OutlinerScreen* outlinerscreen = new OutlinerScreen(names.HIERARCHY_SCREEN);
+	InspectorScreen* inspectorscreen = new InspectorScreen(names.INSPECTOR_SCREEN);
+	ProfilerScreen* profilerscreen = new ProfilerScreen(names.PROFILER_SCREEN);
+	UIManager::getInstance()->pushList(toolscreen);
+	UIManager::getInstance()->pushList(outlinerscreen);
+	UIManager::getInstance()->pushList(inspectorscreen);
+	UIManager::getInstance()->pushList(profilerscreen);
 }
 
 void AppWindow::onUpdate()
@@ -97,6 +114,7 @@ void AppWindow::onUpdate()
 	// (Your code process and dispatch Win32 messages)
 
 	// Start the Dear ImGui frame
+	/*
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -129,8 +147,9 @@ void AppWindow::onUpdate()
 		}
 
 		ImGui::End();
-	//*/
+	*/
 
+	/*
 	for (unsigned int i = 0; i < this->cubeList.size(); i++) {
 		if (playAnim) {
 			this->cubeList[i]->update(EngineTime::getDeltaTime());
@@ -139,14 +158,20 @@ void AppWindow::onUpdate()
 		
 		//std::cout << "updating cubes" << std::endl;
 	}
+	*/
+
+	GameObjectManager::getInstance()->updateAll();
+	GameObjectManager::getInstance()->renderAll(rc.right - rc.left, rc.bottom - rc.top, m_vs, m_ps);
 
 	SceneCameraHandler::getInstance()->update();
 
 	// Rendering
 	// (Your code clears your framebuffer, renders your other stuff etc.)
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//ImGui::Render();
+	//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	// (Your code calls swapchain's Present() function)
+
+	UIManager::getInstance()->drawAllUI();
 
 	m_swap_chain->present(true);
 
@@ -175,7 +200,7 @@ void AppWindow::onDestroy()
 	InputSystem::getInstance()->destroy();
 	m_vb->release();
 	m_ib->release();
-	m_cb->release();
+	//m_cb->release();
 	m_swap_chain->release();
 	m_vs->release();
 	m_ps->release();
@@ -199,14 +224,14 @@ void AppWindow::onKillFocus()
 void AppWindow::onKeyDown(int key)
 {
 	if (key == 'W') {
-		std::cout << "Key W pressed down" << std::endl;
+		//std::cout << "Key W pressed down" << std::endl;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
 	if (key == 'W') {
-		std::cout << "Key W pressed up" << std::endl;
+		//std::cout << "Key W pressed up" << std::endl;
 	}
 }
 

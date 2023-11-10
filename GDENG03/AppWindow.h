@@ -12,6 +12,10 @@
 #include "Matrix4x4.h"
 #include "InputListener.h"
 #include "Cube.h"
+#include "OutlinerScreen.h"
+#include "InspectorScreen.h"
+#include "ToolbarScreen.h"
+#include "ProfilerScreen.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -61,7 +65,7 @@ private:
 	VertexBuffer* m_vb;
 	VertexShader* m_vs;
 	PixelShader* m_ps;
-	ConstantBuffer* m_cb;
+	//ConstantBuffer* m_cb;
 	IndexBuffer* m_ib;
 
 	std::vector<Cube*> cubeList;

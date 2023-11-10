@@ -13,7 +13,7 @@ public:
 	~AGameObject();
 
 	virtual void update(double deltaTime) = 0;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader);
+	virtual void draw(int width, int height, VertexShader* m_vs, PixelShader* m_ps);
 
 	void setPosition(float x, float y, float z);
 	void setPosition(Vector3D pos);
@@ -27,6 +27,8 @@ public:
 	void setRotation(Vector3D rot);
 	Vector3D getLocalRotation();
 
+	bool isEnabled();
+	void setEnabled(bool enabled);
 	std::string getName();
 
 	// refactor this so that you could instead use these on both appwindow and gameobject instead of redeclaring their own versions
@@ -48,8 +50,9 @@ public:
 
 protected:
 	std::string name;
-	Vector3D localPosition;
+	Vector3D localPos;
 	Vector3D localScale;
-	Vector3D localRotation;
-	Matrix4x4 localMatrix;
+	Vector3D localRot;
+	Matrix4x4 localMat;
+	bool enabled = true;
 };

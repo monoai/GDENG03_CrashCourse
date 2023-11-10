@@ -25,28 +25,34 @@ void Camera::update(double deltaTime)
 		z += (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		this->updateViewMatrix();
-	}
-	else if (InputSystem::getInstance()->isKeyDown('S')) {
+	} else if (InputSystem::getInstance()->isKeyDown('S')) {
 		z -= (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
 		this->updateViewMatrix();
-	}
-	else if (InputSystem::getInstance()->isKeyDown('A')) {
-		x += (float)deltaTime * moveSpeed;
-		this->setPosition(x, y, z);
-		this->updateViewMatrix();
-	}
-	else if (InputSystem::getInstance()->isKeyDown('D')) {
+	} else if (InputSystem::getInstance()->isKeyDown('A')) {
 		x -= (float)deltaTime * moveSpeed;
 		this->setPosition(x, y, z);
+		this->updateViewMatrix();
+	} else if (InputSystem::getInstance()->isKeyDown('D')) {
+		x += (float)deltaTime * moveSpeed;
+		this->setPosition(x, y, z);
 		//std::cout << "x: " << x << std::endl;
+		this->updateViewMatrix();
+	} else if (InputSystem::getInstance()->isKeyDown('Q')) {
+		y -= (float)deltaTime * moveSpeed;
+		this->setPosition(x, y, z);
+		this->updateViewMatrix();
+	} else if (InputSystem::getInstance()->isKeyDown('E')) {
+		y += (float)deltaTime * moveSpeed;
+		this->setPosition(x, y, z);
+		//std::cout << "y: " << y << std::endl;
 		this->updateViewMatrix();
 	}
 }
 
 Matrix4x4 Camera::getViewMatrix()
 {
-	return this->localMatrix;
+	return this->localMat;
 }
 
 void Camera::onKeyDown(int key)
@@ -112,5 +118,5 @@ void Camera::updateViewMatrix()
 	worldCam = worldCam.multiply(temp);
 
 	worldCam.inverse();
-	this->localMatrix = worldCam;
+	this->localMat = worldCam;
 }

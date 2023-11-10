@@ -52,6 +52,12 @@
     <Filter Include="ThirdParty\IMGUI">
       <UniqueIdentifier>{c6c05f3d-8aaa-478d-8dc3-80ade9bb697e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UISystem">
+      <UniqueIdentifier>{45f61beb-fdb3-43ea-860b-549ff0bd9cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Screens">
+      <UniqueIdentifier>{39259d39-56b4-4043-bd7e-9a65a6e576a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -128,6 +134,27 @@
     </ClCompile>
     <ClCompile Include="imgui\misc\cpp\imgui_stdlib.cpp">
       <Filter>ThirdParty\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AUIScreen.cpp">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClCompile>
+    <ClCompile Include="OutlinerScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolbarScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfilerScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>GameEngine\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +247,27 @@
     </ClInclude>
     <ClInclude Include="imgui\misc\cpp\imgui_stdlib.h">
       <Filter>ThirdParty\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AUIScreen.h">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GameEngine\UISystem</Filter>
+    </ClInclude>
+    <ClInclude Include="OutlinerScreen.h">
+      <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorScreen.h">
+      <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolbarScreen.h">
+      <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfilerScreen.h">
+      <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>GameEngine\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
