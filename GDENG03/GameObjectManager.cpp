@@ -1,6 +1,9 @@
 #include "GameObjectManager.h"
 #include "EngineTime.h"
 #include "Cube.h"
+#include "Plane.h"
+#include "PhysicsCube.h"
+#include "PhysicsPlane.h"
 #include "AGameObject.h"
 
 GameObjectManager* GameObjectManager::sharedInstance = NULL;
@@ -40,7 +43,7 @@ GameObjectManager::List GameObjectManager::getAllObjects()
 
 int GameObjectManager::activeObjects()
 {
-	return this->objList.size();
+	return (size_t)this->objList.size();
 }
 
 void GameObjectManager::updateAll()
@@ -52,11 +55,11 @@ void GameObjectManager::updateAll()
 	}
 }
 
-void GameObjectManager::renderAll(int vp_width, int vp_height, VertexShader* m_vs, PixelShader* m_ps)
+void GameObjectManager::renderAll(int vp_width, int vp_height)
 {
 	for (unsigned int i = 0; i < this->objList.size(); i++) {
 		if (this->objList[i]->isEnabled()) {
-			this->objList[i]->draw(vp_width, vp_height, m_vs, m_ps);
+			this->objList[i]->draw(vp_width, vp_height);
 		}
 	}
 }
@@ -67,20 +70,28 @@ void GameObjectManager::addObject(AGameObject* gameObject)
 	this->objList.push_back(gameObject);
 }
 
-void GameObjectManager::createObject(PrimitiveType type, void* shader_byte_code, size_t size_shader)
+void GameObjectManager::createObject(PrimitiveType type)
 {
 	if (type == PrimitiveType::CUBE) {
-		Cube* cube = new Cube("Cube", shader_byte_code, size_shader);
+		Cube* cube = new Cube("Cube");
 		cube->setPosition(0.0f, 0.0f, 0.0f);
 		cube->setScale(1.0f, 1.0f, 1.0f);
 		this->addObject(cube);
 	}
 
-	if (type == PrimitiveType::PLANE) {
-		Cube* cube = new Cube("Plane", shader_byte_code, size_shader);
-		cube->setPosition(0.0f, -1.0f, 0.0f);
-		cube->setScale(3.0f, 0.0f, 3.0f);
+	else if (type == PrimitiveType::PLANE) {
+		Plane* plane = new Plane("Plane");
+		this->addObject(plane);
+	}
+
+	else if (type == PrimitiveType::PHYSICS_CUBE) {
+		PhysicsCube* cube = new PhysicsCube("Cube_Physics");
 		this->addObject(cube);
+	}
+
+	else if (type == PrimitiveType::PHYSICS_PLANE) {
+		PhysicsPlane* plane = new PhysicsPlane("Plane_Physics");
+		this->addObject(plane);
 	}
 }
 

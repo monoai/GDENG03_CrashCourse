@@ -20,7 +20,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	switch (msg) {
 		case WM_CREATE: {
 			Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
-			SetWindowLongPtr(hwnd, GWL_USERDATA, (LONG_PTR)window);
+			SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 			window->setHWND(hwnd);
 			window->onCreate();
 			break;

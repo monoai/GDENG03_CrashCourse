@@ -52,6 +52,9 @@ public:
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
 
+	void initializeEngine();
+	void initializeUI();
+
 	virtual void onKeyDown(int key) override;
 	virtual void onKeyUp(int key) override;
 	virtual void onMouseMove(const Point mouse_pos) override;

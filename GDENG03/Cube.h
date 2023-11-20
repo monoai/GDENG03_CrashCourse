@@ -8,14 +8,14 @@
 class Cube : public AGameObject
 {
 public:
-	Cube(std::string name, void* shader_byte_code, size_t size_shader);
+	Cube(std::string name, bool skipInit = false);
 	~Cube();
 
 	void update(double deltaTime) override;
-	void draw(int width, int height, VertexShader* m_vs, PixelShader* m_ps) override;
+	void draw(int width, int height) override;
 	void setAnimSpeed(float speed);
 
-private:
+protected:
 	VertexBuffer* m_vb;
 	IndexBuffer* m_ib;
 	ConstantBuffer* m_cb;

@@ -3,11 +3,13 @@
 
 PixelShader::PixelShader()
 {
+	m_ps = nullptr;
 }
 
 void PixelShader::release()
 {
-	m_ps->Release();
+	if (m_ps)
+		m_ps->Release();
 	delete this;
 }
 
@@ -17,6 +19,11 @@ bool PixelShader::init(const void* shader_byte_code, size_t byte_code_size)
 		return false;
 
 	return true;
+}
+
+ID3D11PixelShader* PixelShader::getShader()
+{
+	return this->m_ps;
 }
 
 PixelShader::~PixelShader()

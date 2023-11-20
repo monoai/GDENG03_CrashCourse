@@ -37,7 +37,7 @@ void DeviceContext::setVertexBuffer(VertexBuffer* vertex_buffer)
 
 void DeviceContext::setIndexBuffer(IndexBuffer* index_buffer)
 {
-	m_device_context->IASetIndexBuffer(index_buffer->m_buffer, DXGI_FORMAT_R32_UINT, 0);
+	m_device_context->IASetIndexBuffer(index_buffer->getBuffer(), DXGI_FORMAT_R32_UINT, 0);
 }
 
 void DeviceContext::drawTriangleList(UINT vertex_count, UINT start_vertex_index)
@@ -70,22 +70,24 @@ void DeviceContext::setViewportSize(UINT width, UINT height)
 
 void DeviceContext::setVertexShader(VertexShader* vertex_shader)
 {
-	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
+	m_device_context->VSSetShader(vertex_shader->getShader(), nullptr, 0);
 }
 
 void DeviceContext::setPixelShader(PixelShader* pixel_shader)
 {
-	m_device_context->PSSetShader(pixel_shader->m_ps, nullptr, 0);
+	m_device_context->PSSetShader(pixel_shader->getShader(), nullptr, 0);
 }
 
-void DeviceContext::setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer)
+void DeviceContext::setRenderConfig(VertexShader* vertexShader, PixelShader* pixelShader)
 {
-	m_device_context->VSSetConstantBuffers(0, 1, &buffer->m_buffer);
+	this->m_device_context->VSSetShader(vertexShader->getShader(), NULL, 0);
+	this->m_device_context->PSSetShader(pixelShader->getShader(), NULL, 0);
 }
 
-void DeviceContext::setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer)
+void DeviceContext::setConstantBuffer(ConstantBuffer* buffer)
 {
-	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+	m_device_context->VSSetConstantBuffers(0, 1, &(buffer->m_buffer));
+	m_device_context->PSSetConstantBuffers(0, 1, &(buffer->m_buffer));
 }
 
 bool DeviceContext::release()

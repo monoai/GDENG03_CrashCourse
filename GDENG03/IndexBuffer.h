@@ -11,6 +11,7 @@ public:
 	UINT getSizeIndexList();
 	bool release();
 	~IndexBuffer();
+	ID3D11Buffer* getBuffer();
 private:
 	UINT m_size_list;
 private:

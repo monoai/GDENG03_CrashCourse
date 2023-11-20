@@ -6,6 +6,8 @@ Camera::Camera(std::string name) : AGameObject(name)
 	this->setPosition(0.0f, 0.0f, -4.0f);
 	this->updateViewMatrix();
 	InputSystem::getInstance()->addListener(this);
+	this->forwardDirection = Vector3D(1.0f, 0.0f, 1.0f);
+	this->backwardDirection = Vector3D(-1.0f, 0.0f, -1.0f);
 }
 
 Camera::~Camera()
@@ -48,6 +50,10 @@ void Camera::update(double deltaTime)
 		//std::cout << "y: " << y << std::endl;
 		this->updateViewMatrix();
 	}
+}
+
+void Camera::draw(int width, int height)
+{
 }
 
 Matrix4x4 Camera::getViewMatrix()

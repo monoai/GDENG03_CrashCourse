@@ -9,6 +9,7 @@ public:
 	~Camera();
 
 	void update(double deltaTime) override;
+	void draw(int width, int height) override;
 	Matrix4x4 getViewMatrix();
 
 	virtual void onKeyDown(int key) override;
@@ -22,5 +23,8 @@ public:
 	void updateViewMatrix();
 private:
 	float rmouseClick = false;
+	Vector3D forwardDirection;
+	Vector3D backwardDirection;
+	Matrix4x4 viewMatrix;
 };
 

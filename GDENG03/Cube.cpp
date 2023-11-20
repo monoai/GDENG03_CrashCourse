@@ -3,21 +3,30 @@
 #include "SwapChain.h"
 #include "SceneCameraHandler.h"
 #include "InputSystem.h"
+#include "ShaderLibrary.h"
 
-Cube::Cube(std::string name, void* shader_byte_code, size_t size_shader) : AGameObject(name)
+Cube::Cube(std::string name, bool skipInit) : AGameObject(name)
 {
+	if (skipInit)
+		return;
+
+	ShaderNames shaderNames;
+	void* shader_byte_code = NULL;
+	size_t size_shader = 0;
+	ShaderLibrary::getInstance()->requestVertexShaderData(shaderNames.BASE_VERTEX_SHADER_NAME, &shader_byte_code, &size_shader);
+
 	vertex quadList[] = {
 		//FRONT FACE
-		{Vector3D(-0.75f,-0.75f,-0.75f), Vector3D(-0.75f,-0.75f,-0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,0.75f,-0.75f), Vector3D(-0.75f,0.75f,-0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,0.75f,-0.75f), Vector3D(0.75f,0.75f,-0.75f), Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,-0.75f,-0.75f), Vector3D(0.75f,-0.75f,-0.75f), Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.75f,-0.75f,-0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.75f,0.75f,-0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.75f,0.75f,-0.75f), Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.75f,-0.75f,-0.75f), Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 
 		//BACK FACE
-		{Vector3D(0.75f,-0.75f,0.75f),Vector3D(0.75f,-0.75f,0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,0.75f,0.75f),Vector3D(0.75f,0.75f,0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,0.75f,0.75f),Vector3D(-0.75f,0.75f,0.75f),   Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,-0.75f,0.75f),Vector3D(-0.75f,-0.75f,0.75f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.75f,-0.75f,0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.75f,0.75f,0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.75f,0.75f,0.75f),   Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.75f,-0.75f,0.75f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 	};
 
 	this->m_vb = GraphicsEngine::get()->createVertexBuffer();
@@ -63,37 +72,32 @@ Cube::~Cube()
 void Cube::update(double deltaTime)
 {
 	this->deltaTime = deltaTime;
-	this->ticks += deltaTime;
+	//this->ticks += deltaTime;
 
 	//float rotFactor = this->ticks * this->speed;
 	//this->setRotation(rotFactor, rotFactor, rotFactor);
 }
 
-void Cube::draw(int width, int height, VertexShader* m_vs, PixelShader* m_ps)
+void Cube::draw(int width, int height)
 {
+	GraphicsEngine* graphEngine = GraphicsEngine::get();
+	DeviceContext* deviceContext = graphEngine->getImmediateDeviceContext();
+
+	//set vertex shader and pixel shader for the object
+	ShaderNames shaderNames;
+	deviceContext->setRenderConfig(ShaderLibrary::getInstance()->getVertexShader(shaderNames.BASE_VERTEX_SHADER_NAME), ShaderLibrary::getInstance()->getPixelShader(shaderNames.BASE_PIXEL_SHADER_NAME));
+
 	constant cc;
 
-	Matrix4x4 transMat;
-	transMat.setIdentity();
-
-	Matrix4x4 translateMat;
-	translateMat.setTranslation(this->getLocalPosition());
-
-	Matrix4x4 scaleMat;
-	scaleMat.setScale(this->getLocalScale());
-
-	Vector3D rotation = this->getLocalRotation();
-	Matrix4x4 zMat; zMat.setRotationZ(rotation.getValues().getZ());
-	Matrix4x4 xMat; xMat.setRotationX(rotation.getValues().getX());
-	Matrix4x4 yMat; yMat.setRotationY(rotation.getValues().getY());
-
-	Matrix4x4 rotMat;
-	rotMat.setIdentity();
-
-	rotMat = rotMat.multiply(xMat.multiply(yMat.multiply(zMat)));
-	transMat = transMat.multiply(scaleMat.multiply(rotMat));
-	transMat = transMat.multiply(translateMat);
-	cc.m_world = transMat;
+	if (this->overrideMatrix)
+	{
+		cc.m_world = this->localMat;
+	}
+	else
+	{
+		this->updateLocalMatrix();
+		cc.m_world = this->localMat;
+	}
 
 	Matrix4x4 cameraMatrix = SceneCameraHandler::getInstance()->getSceneCameraViewMatrix();
 	cc.m_view = cameraMatrix;
@@ -102,15 +106,14 @@ void Cube::draw(int width, int height, VertexShader* m_vs, PixelShader* m_ps)
 	//cc.m_proj.setOrthoLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
 	cc.m_proj.setPerspectiveFovLH((float)width / (float)height, (float)width / (float)height, 0.1f, 1000.0f);
 
-	colorTick += (float)(this->deltaTime) * 0.5f;
-	cc.m_time = (float)colorTick;
+	//colorTick += (float)(this->deltaTime) * 0.5f;
+	//cc.m_time = (float)colorTick;
 	//std::cout << "colorTick: " << colorTick << std::endl;
 	//std::cout << "cc time: " << cc.m_time << std::endl;
 	//std::cout << "dT: " << this->deltaTime << std::endl;
 
 	this->m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_vs, this->m_cb);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, this->m_cb);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(this->m_cb);
 	
 	GraphicsEngine::get()->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(this->m_vb);

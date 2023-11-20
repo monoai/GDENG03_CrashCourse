@@ -14,7 +14,9 @@ public:
 	enum PrimitiveType {
 		CUBE,
 		PLANE,
-		SPHERE
+		SPHERE,
+		PHYSICS_CUBE,
+		PHYSICS_PLANE
 	};
 
 	static GameObjectManager* getInstance();
@@ -25,9 +27,9 @@ public:
 	List getAllObjects();
 	int activeObjects();
 	void updateAll();
-	void renderAll(int vp_width, int vp_height, VertexShader* m_vs, PixelShader* m_ps);
+	void renderAll(int vp_width, int vp_height);
 	void addObject(AGameObject* gameObject);
-	void createObject(PrimitiveType type, void* shader_byte_code, size_t size_shader);
+	void createObject(PrimitiveType type);
 	void deleteObject(AGameObject* gameObject);
 	void deleteObjectByName(std::string name);
 	void setSelectedObject(std::string name);

@@ -26,7 +26,7 @@ void ToolbarScreen::drawUI()
 			VertexShader* m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
 			if (ImGui::MenuItem("Create Cube")) {
-				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::CUBE, shader_byte_code, size_shader);
+				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::CUBE);
 				std::cout << "created cube" << std::endl;
 			}
 			if (ImGui::MenuItem("Create Sphere")) {
@@ -34,13 +34,24 @@ void ToolbarScreen::drawUI()
 				std::cout << "created sphere" << std::endl;
 			}
 			if (ImGui::MenuItem("Create Plane")) {
-				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PLANE, shader_byte_code, size_shader);
+				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PLANE);
 				std::cout << "created plane" << std::endl;
 			}
 			if (ImGui::BeginMenu("Light")) {
 				if (ImGui::MenuItem("Point Light")) {
 					// placeholder place for future obj
 					std::cout << "created point light" << std::endl;
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Physics")) {
+				if (ImGui::MenuItem("Create Physics Cube")) {
+					GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PHYSICS_CUBE);
+					std::cout << "created phys cube" << std::endl;
+				}
+				if (ImGui::MenuItem("Create Physics Plane")) {
+					GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PHYSICS_PLANE);
+					std::cout << "created phys cube" << std::endl;
 				}
 				ImGui::EndMenu();
 			}

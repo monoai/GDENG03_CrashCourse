@@ -1,12 +1,17 @@
 #include "VertexShader.h"
 #include "GraphicsEngine.h"
 
-VertexShader::VertexShader() {
+VertexShader::VertexShader()
+{
+	m_vs = nullptr;
 }
 
-void VertexShader::release() {
-	m_vs->Release();
+void VertexShader::release()
+{
+	if (m_vs)
+		m_vs->Release();
 	delete this;
+
 }
 
 bool VertexShader::init(const void* shader_byte_code, size_t byte_code_size) {
@@ -16,7 +21,10 @@ bool VertexShader::init(const void* shader_byte_code, size_t byte_code_size) {
 	return true;
 }
 
-
+ID3D11VertexShader* VertexShader::getShader()
+{
+	return this->m_vs;
+}
 
 VertexShader::~VertexShader() {
 }

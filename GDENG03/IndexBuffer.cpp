@@ -44,6 +44,10 @@ bool IndexBuffer::release()
 	return false;
 }
 
+ID3D11Buffer* IndexBuffer::getBuffer()
+{
+	return this->m_buffer;
+}
 
 IndexBuffer::~IndexBuffer()
 {
