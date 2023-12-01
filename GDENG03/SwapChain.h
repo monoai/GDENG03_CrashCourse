@@ -6,10 +6,8 @@ class DeviceContext;
 class SwapChain
 {
 public:
-	SwapChain();
-	bool init(HWND hwnd,UINT width,UINT height);
+	SwapChain(HWND hwnd, UINT width, UINT height);
 	bool present(bool vsync);
-	bool release();
 	~SwapChain();
 private:
 	IDXGISwapChain* m_swap_chain;

@@ -13,15 +13,14 @@ class GraphicsEngine
 {
 public:
 	GraphicsEngine();
-	bool init();
-	bool release();
 	~GraphicsEngine();
+	static void initialize();
 public:
-	SwapChain* createSwapChain();
+	SwapChain* createSwapChain(HWND hwnd, UINT width, UINT height);
 	DeviceContext* getImmediateDeviceContext();
-	VertexBuffer* createVertexBuffer();
-	IndexBuffer* createIndexBuffer();
-	ConstantBuffer* createConstantBuffer();
+	VertexBuffer* createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, size_t size_byte_shader);
+	IndexBuffer* createIndexBuffer(void* list_indices, UINT size_list);
+	ConstantBuffer* createConstantBuffer(void* buffer, UINT size_buffer);
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
 public:
@@ -38,6 +37,7 @@ public:
 	*/
 public:
 	static GraphicsEngine* get();
+	static GraphicsEngine* m_engine;
 private:
 	DeviceContext* m_imm_device_context;
 private:

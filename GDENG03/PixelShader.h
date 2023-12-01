@@ -6,12 +6,9 @@ class DeviceContext;
 
 class PixelShader {
 public:
-	PixelShader();
-	void release();
+	PixelShader(const void* shader_byte_code, size_t byte_code_size);
 	~PixelShader();
 	ID3D11PixelShader* getShader();
-private:
-	bool init(const void* shader_byte_code, size_t byte_code_size);
 private:
 	ID3D11PixelShader* m_ps;
 private:

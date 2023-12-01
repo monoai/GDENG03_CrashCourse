@@ -90,15 +90,9 @@ void DeviceContext::setConstantBuffer(ConstantBuffer* buffer)
 	m_device_context->PSSetConstantBuffers(0, 1, &(buffer->m_buffer));
 }
 
-bool DeviceContext::release()
-{
-	m_device_context->Release();
-	delete this;
-	return true;
-}
-
 DeviceContext::~DeviceContext()
 {
+	m_device_context->Release();
 }
 
 ID3D11DeviceContext* DeviceContext::getDeviceContext()

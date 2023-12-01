@@ -67,8 +67,8 @@ ShaderLibrary::ShaderLibrary()
 ShaderLibrary::~ShaderLibrary()
 {
 	ShaderNames shaderNames;
-	this->activeVertexShaders[shaderNames.BASE_VERTEX_SHADER_NAME]->release();
-	this->activePixelShaders[shaderNames.BASE_PIXEL_SHADER_NAME]->release();
+	delete this->activeVertexShaders[shaderNames.BASE_VERTEX_SHADER_NAME];
+	delete this->activePixelShaders[shaderNames.BASE_PIXEL_SHADER_NAME];
 
 	this->activeVertexShaders.clear();
 	this->activePixelShaders.clear();

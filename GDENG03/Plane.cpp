@@ -26,9 +26,8 @@ Plane::Plane(std::string name, bool skipInit) : Cube(name, skipInit)
 		{Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(1,1,1), Vector3D(0,0.2f,0) },
 	};
 
-	this->m_vb->release();
-	this->m_vb = GraphicsEngine::get()->createVertexBuffer();
-	this->m_vb->load(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
+	delete this->m_vb;
+	this->m_vb = GraphicsEngine::get()->createVertexBuffer(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
 
 	unsigned int indexList[] =
 	{
@@ -52,16 +51,14 @@ Plane::Plane(std::string name, bool skipInit) : Cube(name, skipInit)
 		1,0,7
 	};
 
-	this->m_ib->release();
-	this->m_ib = GraphicsEngine::get()->createIndexBuffer();
-	this->m_ib->load(indexList, ARRAYSIZE(indexList));
+	delete this->m_ib;
+	this->m_ib = GraphicsEngine::get()->createIndexBuffer(indexList, ARRAYSIZE(indexList));
 
-	this->m_cb->release();
+	delete this->m_cb;
 	//create constant buffer
 	constant cc;
 	cc.m_time = 0;
-	this->m_cb = GraphicsEngine::get()->createConstantBuffer();
-	this->m_cb->load(&cc, sizeof(cc));
+	this->m_cb = GraphicsEngine::get()->createConstantBuffer(&cc, sizeof(cc));
 
 	this->setScale(8.0f, 8.0f, 0.1f);
 	this->setRotation(90.0f, 0.0f, 0.0f);

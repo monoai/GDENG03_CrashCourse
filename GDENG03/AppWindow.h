@@ -70,6 +70,7 @@ private:
 	PixelShader* m_ps;
 	//ConstantBuffer* m_cb;
 	IndexBuffer* m_ib;
+	//static GraphicsEngine* m_engine;
 
 	std::vector<Cube*> cubeList;
 

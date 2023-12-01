@@ -64,17 +64,17 @@ void AppWindow::onDestroy()
 	Window::onDestroy();
 	InputSystem::getInstance()->removeListener(this);
 	InputSystem::getInstance()->destroy();
-	m_vb->release();
-	m_ib->release();
+	//m_vb->release();
+	//m_ib->release();
 	//m_cb->release();
-	m_swap_chain->release();
-	m_vs->release();
-	m_ps->release();
+	//m_swap_chain->release();
+	//m_vs->release();
+	//m_ps->release();
 	SceneCameraHandler::destroy();
 	GameObjectManager::destroy();
 	BaseComponentSystem::destroy();
 	UIManager::destroy();
-	GraphicsEngine::get()->release();
+	delete GraphicsEngine::get();
 	ShaderLibrary::destroy();
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
@@ -93,47 +93,15 @@ void AppWindow::onKillFocus()
 
 void AppWindow::initializeEngine()
 {
-	GraphicsEngine::get()->init();
-	m_swap_chain = GraphicsEngine::get()->createSwapChain();
+	// Try to initialize the GraphicsEngine via the constructor
+	GraphicsEngine* m_engine = nullptr;
+	try {
+		GraphicsEngine::initialize();
+	}
+	catch (const std::exception& ex) { std::cout << ex.what() << std::endl; }
 
 	RECT rc = this->getClientWindowRect();
-	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-
-	/*
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-
-	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
-
-	/*
-	std::uniform_real_distribution<> posVal(-1.50, 1.50);
-	std::uniform_real_distribution<> speedVal(-5.0, 5.00);
-
-	for (int i = 0; i < 50; i++) {
-		Cube* cubeObject = new Cube("Cube", shader_byte_code, size_shader);
-
-		cubeObject->setAnimSpeed(speedVal(rng));
-		cubeObject->setPosition(Vector3D(posVal(rng), posVal(rng), 0.0f));
-		//cubeObject->setAnimSpeed(3.0f);
-		//cubeObject->setPosition(Vector3D(0.0f, 0.0f, 0.0f));
-		cubeObject->setScale(Vector3D(0.5, 0.5, 0.5));
-		this->cubeList.push_back(cubeObject);
-		//std::cout << "Created" << std::endl;
-	}
-	*/
-
-	/*
-	// only release if you're done compiling shaders
-	GraphicsEngine::get()->releaseCompiledShader();
-
-	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
-
-	// remember that if we need to do pixel shading stuff, do it here
-
-	GraphicsEngine::get()->releaseCompiledShader();
-	*/
+	m_swap_chain = GraphicsEngine::get()->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	// Initialize systems
 	ShaderLibrary::initialize();

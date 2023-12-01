@@ -29,8 +29,7 @@ Cube::Cube(std::string name, bool skipInit) : AGameObject(name)
 		{Vector3D(-0.75f,-0.75f,0.75f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 	};
 
-	this->m_vb = GraphicsEngine::get()->createVertexBuffer();
-	this->m_vb->load(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
+	this->m_vb = GraphicsEngine::get()->createVertexBuffer(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
 
 	unsigned int indexList[] =
 	{
@@ -53,19 +52,17 @@ Cube::Cube(std::string name, bool skipInit) : AGameObject(name)
 		7,6,1,
 		1,0,7
 	};
-	this->m_ib = GraphicsEngine::get()->createIndexBuffer();
-	this->m_ib->load(indexList, ARRAYSIZE(indexList));
+	this->m_ib = GraphicsEngine::get()->createIndexBuffer(indexList, ARRAYSIZE(indexList));
 
 	constant cc;
 	cc.m_time = 0.0f;
-	this->m_cb = GraphicsEngine::get()->createConstantBuffer();
-	this->m_cb->load(&cc, sizeof(constant));
+	this->m_cb = GraphicsEngine::get()->createConstantBuffer(&cc, sizeof(constant));
 }
 
 Cube::~Cube()
 {
-	this->m_vb->release();
-	this->m_ib->release();
+	delete this->m_vb;
+	delete this->m_ib;
 	AGameObject::~AGameObject();
 }
 

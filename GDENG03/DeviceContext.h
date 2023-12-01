@@ -29,8 +29,6 @@ public:
 	void setPixelShader(PixelShader* pixel_shader);
 
 	void setConstantBuffer(ConstantBuffer* buffer);
-
-	bool release();
 	~DeviceContext();
 public:
 	ID3D11DeviceContext* getDeviceContext();

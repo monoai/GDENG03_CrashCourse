@@ -6,10 +6,8 @@ class DeviceContext;
 class IndexBuffer
 {
 public:
-	IndexBuffer();
-	bool load(void* list_indices, UINT size_list);
+	IndexBuffer(void* list_indices, UINT size_list);
 	UINT getSizeIndexList();
-	bool release();
 	~IndexBuffer();
 	ID3D11Buffer* getBuffer();
 private:

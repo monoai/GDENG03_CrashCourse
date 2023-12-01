@@ -29,8 +29,7 @@ PhysicsPlane::PhysicsPlane(std::string name, bool skipInit) : Cube(name, skipIni
 	};
 
 	//this->m_vb->release();
-	this->m_vb = GraphicsEngine::get()->createVertexBuffer();
-	this->m_vb->load(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
+	this->m_vb = GraphicsEngine::get()->createVertexBuffer(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);
 
 	unsigned int indexList[] =
 	{
@@ -54,16 +53,14 @@ PhysicsPlane::PhysicsPlane(std::string name, bool skipInit) : Cube(name, skipIni
 		1,0,7
 	};
 
-	this->m_ib->release();
-	this->m_ib = GraphicsEngine::get()->createIndexBuffer();
-	this->m_ib->load(indexList, ARRAYSIZE(indexList));
+	delete this->m_ib;
+	this->m_ib = GraphicsEngine::get()->createIndexBuffer(indexList, ARRAYSIZE(indexList));
 
-	this->m_cb->release();
+	delete this->m_cb;
 	//create constant buffer
 	constant cc;
 	cc.m_time = 0;
-	this->m_cb = GraphicsEngine::get()->createConstantBuffer();
-	this->m_cb->load(&cc, sizeof(cc));
+	this->m_cb = GraphicsEngine::get()->createConstantBuffer(&cc, sizeof(cc));
 
 	this->setPosition(0.0f, -5.0f, 0.0f);
 	this->setScale(32.0f, 0.2f, 32.0f);
