@@ -6,6 +6,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "TexturedVertexBuffer.h"
 
 #include <d3dcompiler.h>
 #include <iostream>
@@ -84,6 +85,16 @@ SwapChain* GraphicsEngine::createSwapChain(HWND hwnd, UINT width, UINT height)
 DeviceContext* GraphicsEngine::getImmediateDeviceContext()
 {
     return this->m_imm_device_context;
+}
+
+TexturedVertexBuffer* GraphicsEngine::createTexturedBuffer(void* vertexList, UINT vertexSize, UINT listSize, void* shaderByteCode, UINT byteShaderSize)
+{
+    TexturedVertexBuffer* tvb = nullptr;
+    try {
+        tvb = new TexturedVertexBuffer(vertexList, vertexSize, listSize, shaderByteCode, byteShaderSize);
+    }
+    catch (const std::exception& ex) { std::cout << ex.what() << std::endl; }
+    return tvb;
 }
 
 VertexBuffer* GraphicsEngine::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, size_t size_byte_shader)

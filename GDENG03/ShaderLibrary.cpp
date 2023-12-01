@@ -55,10 +55,10 @@ ShaderLibrary::ShaderLibrary()
 	graphEngine->compilePixelShader(shaderNames.BASE_PIXEL_SHADER_NAME.c_str(), "psmain", &shaderData.shader_byte_code, &shaderData.size_shader);
 	this->activePixelShaders[shaderNames.BASE_PIXEL_SHADER_NAME] = graphEngine->createPixelShader(shaderData.shader_byte_code, shaderData.size_shader);
 
-	graphEngine->compileVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME.c_str(), "main", &shaderData.shader_byte_code, &shaderData.size_shader);
+	graphEngine->compileVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME.c_str(), "vsmain", &shaderData.shader_byte_code, &shaderData.size_shader);
 	this->activeVertexShaders[shaderNames.TEXTURED_VERTEX_SHADER_NAME] = graphEngine->createVertexShader(shaderData.shader_byte_code, shaderData.size_shader);
 
-	graphEngine->compilePixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME.c_str(), "main", &shaderData.shader_byte_code, &shaderData.size_shader);
+	graphEngine->compilePixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME.c_str(), "psmain", &shaderData.shader_byte_code, &shaderData.size_shader);
 	this->activePixelShaders[shaderNames.TEXTURED_PIXEL_SHADER_NAME] = graphEngine->createPixelShader(shaderData.shader_byte_code, shaderData.size_shader);
 
 	std::cout << "Shader library initialized. \n";

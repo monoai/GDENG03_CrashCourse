@@ -6,6 +6,7 @@
 #include "GameObjectManager.h"
 #include "BaseComponentSystem.h"
 #include "ShaderLibrary.h"
+#include "TextureManager.h"
 #include <array>
 #include <random>
 #include <algorithm>
@@ -76,6 +77,7 @@ void AppWindow::onDestroy()
 	UIManager::destroy();
 	delete GraphicsEngine::get();
 	ShaderLibrary::destroy();
+	TextureManager::destroy();
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -105,6 +107,7 @@ void AppWindow::initializeEngine()
 
 	// Initialize systems
 	ShaderLibrary::initialize();
+	TextureManager::initialize();
 	InputSystem::initialize();
 	//InputSystem::getInstance()->addListener(this);
 	GameObjectManager::initialize();

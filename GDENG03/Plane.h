@@ -11,6 +11,5 @@ public:
 	~Plane();
 
 	void update(double deltaTime) override;
-	void draw(int width, int height) override;
 
 };

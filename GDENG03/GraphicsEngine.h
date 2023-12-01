@@ -8,6 +8,7 @@ class IndexBuffer;
 class ConstantBuffer;
 class VertexShader;
 class PixelShader;
+class TexturedVertexBuffer;
 
 class GraphicsEngine
 {
@@ -18,6 +19,7 @@ public:
 public:
 	SwapChain* createSwapChain(HWND hwnd, UINT width, UINT height);
 	DeviceContext* getImmediateDeviceContext();
+	TexturedVertexBuffer* createTexturedBuffer(void* vertexList, UINT vertexSize, UINT listSize, void* shaderByteCode, UINT byteShaderSize);
 	VertexBuffer* createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, size_t size_byte_shader);
 	IndexBuffer* createIndexBuffer(void* list_indices, UINT size_list);
 	ConstantBuffer* createConstantBuffer(void* buffer, UINT size_buffer);

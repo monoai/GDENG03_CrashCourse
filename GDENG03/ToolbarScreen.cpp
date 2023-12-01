@@ -29,6 +29,10 @@ void ToolbarScreen::drawUI()
 				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::CUBE);
 				std::cout << "created cube" << std::endl;
 			}
+			if (ImGui::MenuItem("Create Textured Cube")) {
+				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::TEXTURED_CUBE);
+				std::cout << "created cube" << std::endl;
+			}
 			if (ImGui::MenuItem("Create Sphere")) {
 				// placeholder place for future obj
 				std::cout << "created sphere" << std::endl;

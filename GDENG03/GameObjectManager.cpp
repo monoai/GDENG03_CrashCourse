@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "EngineTime.h"
 #include "Cube.h"
+#include "TexturedCube.h"
 #include "Plane.h"
 #include "PhysicsCube.h"
 #include "PhysicsPlane.h"
@@ -74,6 +75,13 @@ void GameObjectManager::createObject(PrimitiveType type)
 {
 	if (type == PrimitiveType::CUBE) {
 		Cube* cube = new Cube("Cube");
+		cube->setPosition(0.0f, 0.0f, 0.0f);
+		cube->setScale(1.0f, 1.0f, 1.0f);
+		this->addObject(cube);
+	}
+
+	else if (type == PrimitiveType::TEXTURED_CUBE) {
+		TexturedCube* cube = new TexturedCube("Cube_Textured");
 		cube->setPosition(0.0f, 0.0f, 0.0f);
 		cube->setScale(1.0f, 1.0f, 1.0f);
 		this->addObject(cube);

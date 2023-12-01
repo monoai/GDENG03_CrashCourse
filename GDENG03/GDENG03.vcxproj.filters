@@ -67,6 +67,15 @@
     <Filter Include="GameEngine\Shaders">
       <UniqueIdentifier>{39e36169-6811-40cc-abd6-35d7bd222206}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ResourceManager">
+      <UniqueIdentifier>{af1af53f-8b6d-48c2-a27f-081be4460253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ResourceManager\TextureManager">
+      <UniqueIdentifier>{d0ae6260-17a1-492e-8153-dfe631056bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\TexturedVertexBuffer">
+      <UniqueIdentifier>{2f25eba7-cdf5-4ef0-a303-bdd18a467455}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -187,6 +196,24 @@
       <Filter>GameEngine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Plane.cpp">
+      <Filter>GameEngine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedVertexBuffer.cpp">
+      <Filter>GameEngine\GraphicsEngine\TexturedVertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedCube.cpp">
       <Filter>GameEngine\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,12 +353,39 @@
     <ClInclude Include="Plane.h">
       <Filter>GameEngine\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedVertexBuffer.h">
+      <Filter>GameEngine\GraphicsEngine\TexturedVertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedCube.h">
+      <Filter>GameEngine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>App</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
+      <Filter>App</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedPixelShader.hlsl">
+      <Filter>App</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedVertexShader.hlsl">
       <Filter>App</Filter>
     </FxCompile>
   </ItemGroup>

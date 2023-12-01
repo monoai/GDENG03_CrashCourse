@@ -60,8 +60,9 @@ Plane::Plane(std::string name, bool skipInit) : Cube(name, skipInit)
 	cc.m_time = 0;
 	this->m_cb = GraphicsEngine::get()->createConstantBuffer(&cc, sizeof(cc));
 
-	this->setScale(8.0f, 8.0f, 0.1f);
-	this->setRotation(90.0f, 0.0f, 0.0f);
+	this->setScale(8.0f, 0.2f, 8.0f);
+	this->setRotation(0.0f, 0.0f, 0.0f);
+	this->updateLocalMatrix();
 }
 
 Plane::~Plane()
@@ -71,9 +72,4 @@ Plane::~Plane()
 void Plane::update(double deltaTime)
 {
 	Cube::update(deltaTime);
-}
-
-void Plane::draw(int width, int height)
-{
-	Cube::draw(width, height);
 }

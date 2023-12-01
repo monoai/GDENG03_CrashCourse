@@ -13,6 +13,7 @@ public:
 
 	enum PrimitiveType {
 		CUBE,
+		TEXTURED_CUBE,
 		PLANE,
 		SPHERE,
 		PHYSICS_CUBE,

@@ -74,7 +74,7 @@
     <LibraryPath>$(ProjectDir)includes\ReactPhysics3D;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(ProjectDir)includes\ReactPhysics3D;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(ProjectDir)includes\ReactPhysics3D;$(ProjectDir)includes\DirectXTex\bin;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,12 +112,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes\imgui\misc\cpp;$(ProjectDir)includes\imgui\backends;$(ProjectDir)includes\imgui;$(ProjectDir)includes\ReactPhysics3D\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)includes\imgui\misc\cpp;$(ProjectDir)includes\imgui\backends;$(ProjectDir)includes\imgui;$(ProjectDir)includes\ReactPhysics3D\include;$(ProjectDir)includes\DirectXTex\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;D3DCompiler.lib;reactphysics3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;D3DCompiler.lib;reactphysics3d.lib;DirectXTexD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -170,7 +171,13 @@
     <ClCompile Include="PhysicsPlane.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TexturedCube.cpp" />
+    <ClCompile Include="TexturedVertexBuffer.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="ToolbarScreen.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="ProfilerScreen.cpp" />
@@ -214,7 +221,13 @@
     <ClInclude Include="PhysicsPlane.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShaderLibrary.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TexturedCube.h" />
+    <ClInclude Include="TexturedVertexBuffer.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="ToolbarScreen.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Point.h" />
@@ -222,6 +235,7 @@
     <ClInclude Include="SceneCameraHandler.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />
     <ClInclude Include="VertexBuffer.h" />
@@ -230,6 +244,12 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="TexturedPixelShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="TexturedVertexShader.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
