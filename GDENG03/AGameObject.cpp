@@ -231,6 +231,11 @@ void AGameObject::updateLocalMatrix()
 	this->localMat = transMat;
 }
 
+Matrix4x4 AGameObject::getLocalMatrix()
+{
+	return this->localMat;
+}
+
 float* AGameObject::getRawMatrix()
 {
 	return nullptr;

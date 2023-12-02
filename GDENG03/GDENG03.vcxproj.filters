@@ -76,6 +76,12 @@
     <Filter Include="GameEngine\GraphicsEngine\TexturedVertexBuffer">
       <UniqueIdentifier>{2f25eba7-cdf5-4ef0-a303-bdd18a467455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\EngineBackend">
+      <UniqueIdentifier>{e9c08769-450a-4eb2-9c4e-5d838a136184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\EditorAction">
+      <UniqueIdentifier>{ca5ea503-ddf5-4b89-845f-e88bed586a28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -215,6 +221,24 @@
     </ClCompile>
     <ClCompile Include="TexturedCube.cpp">
       <Filter>GameEngine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineBackend.cpp">
+      <Filter>GameEngine\EngineBackend</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenePlayScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorAction.cpp">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionMemento.cpp">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHistory.cpp">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionScreen.cpp">
+      <Filter>GameEngine\Screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +397,24 @@
     </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineBackend.h">
+      <Filter>GameEngine\EngineBackend</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePlayScreen.h">
+      <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorAction.h">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionMemento.h">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHistory.h">
+      <Filter>GameEngine\EditorAction</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionScreen.h">
+      <Filter>GameEngine\Screens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

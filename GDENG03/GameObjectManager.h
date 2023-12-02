@@ -4,12 +4,15 @@
 #include <string>
 #include <unordered_map>
 #include "AGameObject.h"
+#include "EditorAction.h"
 
 class GameObjectManager
 {
 public:
 	typedef std::vector<AGameObject*> List;
 	typedef std::unordered_map<std::string, AGameObject*> HashTable;
+
+	void applyEditorAction(EditorAction* action);
 
 	enum PrimitiveType {
 		CUBE,

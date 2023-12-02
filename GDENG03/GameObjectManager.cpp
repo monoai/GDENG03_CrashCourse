@@ -9,6 +9,18 @@
 
 GameObjectManager* GameObjectManager::sharedInstance = NULL;
 
+void GameObjectManager::applyEditorAction(EditorAction* action)
+{
+	AGameObject* object = this->findObjectByName(action->getOwnerName());
+	if (object != NULL) {
+		object->recomputeMatrix(action->getStoredMatrix().getMatrixFloat());
+		object->setPosition(action->getStorePos());
+		object->setRotation(action->getStoredOrientation().x, action->getStoredOrientation().y, action->getStoredOrientation().z);
+		object->setScale(action->getStoredScale());
+
+	}
+}
+
 GameObjectManager* GameObjectManager::getInstance()
 {
 	return sharedInstance;

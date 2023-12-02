@@ -8,6 +8,7 @@
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
 #include "EngineBackend.h"
+#include "ActionHistory.h"
 #include <array>
 #include <random>
 #include <algorithm>
@@ -92,6 +93,7 @@ void AppWindow::onDestroy()
 	ShaderLibrary::destroy();
 	TextureManager::destroy();
 	EngineBackend::destroy();
+	ActionHistory::destroy();
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -129,6 +131,7 @@ void AppWindow::initializeEngine()
 	BaseComponentSystem::initialize();
 	EngineTime::initialize();
 	SceneCameraHandler::initialize();
+	ActionHistory::initialize();
 }
 
 void AppWindow::initializeUI()
@@ -140,11 +143,13 @@ void AppWindow::initializeUI()
 	InspectorScreen* inspectorscreen = new InspectorScreen(names.INSPECTOR_SCREEN);
 	ProfilerScreen* profilerscreen = new ProfilerScreen(names.PROFILER_SCREEN);
 	ScenePlayScreen* sceneplayscreen = new ScenePlayScreen(names.SCENEPLAY_SCREEN);
+	ActionScreen* actionscreen = new ActionScreen(names.ACTION_SCREEN);
 	UIManager::getInstance()->pushList(toolscreen);
 	UIManager::getInstance()->pushList(outlinerscreen);
 	UIManager::getInstance()->pushList(inspectorscreen);
 	UIManager::getInstance()->pushList(profilerscreen);
 	UIManager::getInstance()->pushList(sceneplayscreen);
+	UIManager::getInstance()->pushList(actionscreen);
 }
 
 void AppWindow::onKeyDown(int key)

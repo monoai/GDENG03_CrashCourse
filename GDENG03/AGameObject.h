@@ -16,6 +16,13 @@ public:
 	AGameObject(std::string name);
 	~AGameObject();
 
+	struct AQuaternion {
+		float w = 0.0f;
+		float x = 0.0f;
+		float y = 0.0f;
+		float z = 0.0f;
+	};
+
 	typedef std::vector<AComponent*> ComponentList;
 
 	virtual void update(double deltaTime) = 0;
@@ -48,6 +55,7 @@ public:
 	void recomputeMatrix(float matrix[16]);
 	float* getPhysicsLocalMatrix();
 	void updateLocalMatrix();
+	Matrix4x4 getLocalMatrix();
 	float* getRawMatrix();
 
 	// refactor this so that you could instead use these on both appwindow and gameobject instead of redeclaring their own versions

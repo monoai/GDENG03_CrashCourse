@@ -1,6 +1,6 @@
 #include "InspectorScreen.h"
 #include "imgui.h"
-
+#include "ActionHistory.h"
 
 InspectorScreen::InspectorScreen(std::string name) : AUIScreen(name)
 {
@@ -54,8 +54,10 @@ void InspectorScreen::drawUI()
 void InspectorScreen::transUpdate()
 {
 	if (this->selectedObj != NULL) {
+		ActionHistory::getInstance()->startRecordAction(this->selectedObj);
 		this->selectedObj->setPosition(Vector3D(this->pos[0], this->pos[1], this->pos[2]));
 		this->selectedObj->setRotation(Vector3D(this->rot[0], this->rot[1], this->rot[2]));
 		this->selectedObj->setScale(Vector3D(this->scale[0], this->scale[1], this->scale[2]));
+		ActionHistory::getInstance()->endRecordAction();
 	}
 }
