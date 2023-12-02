@@ -52,7 +52,7 @@ EditorAction* ActionHistory::undoAction()
 		ActionMemento* action = this->actionsPerformed.top();
 		this->actionsPerformed.pop();
 		this->actionsCancelled.push(action);
-		return action->getNewAction();
+		return action->getOldAction();
 	}
 }
 
@@ -62,7 +62,7 @@ EditorAction* ActionHistory::redoAction()
 		ActionMemento* action = this->actionsCancelled.top();
 		this->actionsCancelled.pop();
 		this->actionsPerformed.push(action);
-		return action->getOldAction();
+		return action->getNewAction();
 	}
 }
 
