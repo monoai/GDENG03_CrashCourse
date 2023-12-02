@@ -149,6 +149,7 @@
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
+    <ClCompile Include="EngineBackend.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="AGameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="ScenePlayScreen.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TexturedCube.cpp" />
@@ -197,6 +199,7 @@
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DeviceContext.h" />
+    <ClInclude Include="EngineBackend.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="AGameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="ScenePlayScreen.h" />
     <ClInclude Include="ShaderLibrary.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TexturedCube.h" />

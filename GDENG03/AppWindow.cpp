@@ -7,6 +7,7 @@
 #include "BaseComponentSystem.h"
 #include "ShaderLibrary.h"
 #include "TextureManager.h"
+#include "EngineBackend.h"
 #include <array>
 #include <random>
 #include <algorithm>
@@ -39,19 +40,31 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 	InputSystem::getInstance()->update();
 	// remember to set the shaders first else null errors
-	//GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	//GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, color);
 
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
+	EngineBackend* backend = EngineBackend::getInstance();
+	if (backend->getMode() == EngineBackend::EditorMode::PLAY) {
+		BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+		GameObjectManager::getInstance()->updateAll();
+	}
+	else if (backend->getMode() == EngineBackend::EditorMode::EDITOR) {
+		GameObjectManager::getInstance()->updateAll();
+
+	}
+	else if (backend->getMode() == EngineBackend::EditorMode::PAUSED) {
+		if (backend->insideFrameStep()) {
+			BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
+			GameObjectManager::getInstance()->updateAll();
+			backend->endFrameStep();
+		}
+	}
+
 	// systems
-	GameObjectManager::getInstance()->updateAll();
 	GameObjectManager::getInstance()->renderAll(rc.right - rc.left, rc.bottom - rc.top);
-	
-	BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 	
 	SceneCameraHandler::getInstance()->update();
 
@@ -78,6 +91,7 @@ void AppWindow::onDestroy()
 	delete GraphicsEngine::get();
 	ShaderLibrary::destroy();
 	TextureManager::destroy();
+	EngineBackend::destroy();
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -101,6 +115,7 @@ void AppWindow::initializeEngine()
 		GraphicsEngine::initialize();
 	}
 	catch (const std::exception& ex) { std::cout << ex.what() << std::endl; }
+	EngineBackend::initialize();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = GraphicsEngine::get()->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -124,10 +139,12 @@ void AppWindow::initializeUI()
 	OutlinerScreen* outlinerscreen = new OutlinerScreen(names.HIERARCHY_SCREEN);
 	InspectorScreen* inspectorscreen = new InspectorScreen(names.INSPECTOR_SCREEN);
 	ProfilerScreen* profilerscreen = new ProfilerScreen(names.PROFILER_SCREEN);
+	ScenePlayScreen* sceneplayscreen = new ScenePlayScreen(names.SCENEPLAY_SCREEN);
 	UIManager::getInstance()->pushList(toolscreen);
 	UIManager::getInstance()->pushList(outlinerscreen);
 	UIManager::getInstance()->pushList(inspectorscreen);
 	UIManager::getInstance()->pushList(profilerscreen);
+	UIManager::getInstance()->pushList(sceneplayscreen);
 }
 
 void AppWindow::onKeyDown(int key)

@@ -16,6 +16,7 @@
 #include "InspectorScreen.h"
 #include "ToolbarScreen.h"
 #include "ProfilerScreen.h"
+#include "ScenePlayScreen.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -23,7 +24,7 @@
 
 struct vertex {
 	Vector3D position;
-	Vector3D position1;
+	//Vector3D position1;
 	Vector3D color;
 	Vector3D color1;
 };
