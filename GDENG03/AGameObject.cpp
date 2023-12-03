@@ -1,4 +1,5 @@
 #include "AGameObject.h"
+#include "EditorAction.h"
 
 AGameObject::AGameObject(std::string name)
 {
@@ -6,6 +7,7 @@ AGameObject::AGameObject(std::string name)
 	this->localRot = Vector3D(0.0f,0.0f,0.0f);
 	this->localPos = Vector3D(0.0f, 0.0f, 0.0f);
 	this->localScale = Vector3D(1.0f, 1.0f, 1.0f);
+	this->localMat.setIdentity();
 }
 
 AGameObject::~AGameObject()
@@ -239,4 +241,30 @@ Matrix4x4 AGameObject::getLocalMatrix()
 float* AGameObject::getRawMatrix()
 {
 	return nullptr;
+}
+
+void AGameObject::saveEditState()
+{
+	if (this->lastEditState == NULL) {
+		this->lastEditState = new EditorAction(this);
+	}
+}
+
+void AGameObject::restoreEditState()
+{
+	if (this->lastEditState != NULL) {
+		this->localPos = this->lastEditState->getStorePos();
+		this->localScale = this->lastEditState->getStoredScale();
+		this->orientation = this->lastEditState->getStoredOrientation();
+		this->localMat = this->lastEditState->getStoredMatrix();
+		this->lastEditState = NULL;
+		std::cout << "objName: " << this->getName() << std::endl;
+		std::cout << "localPos: " << this->localPos.getX() << this->localPos.getY() << this->localPos.getZ() << std::endl;
+		std::cout << "localScale: " << this->localScale.getX() << this->localScale.getY() << this->localScale.getZ() << std::endl;
+		std::cout << "localPos: " << this->localRot.getX() << this->localRot.getY() << this->localRot.getZ() << std::endl;
+		std::cout << "-------" << std::endl;
+	}
+	else {
+		std::cout << "[WARNING] - NULL, no restoration." << std::endl;
+	}
 }

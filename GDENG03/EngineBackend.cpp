@@ -21,6 +21,11 @@ void EngineBackend::destroy()
 void EngineBackend::setMode(EditorMode mode)
 {
 	this->editorMode = mode;
+	if (this->editorMode == EditorMode::PLAY) {
+		GameObjectManager::getInstance()->saveEditStates();
+	} else if (this->editorMode == EditorMode::EDITOR) {
+		GameObjectManager::getInstance()->restoreEditStates();
+	}
 }
 
 void EngineBackend::startFrameStep()

@@ -21,6 +21,20 @@ void GameObjectManager::applyEditorAction(EditorAction* action)
 	}
 }
 
+void GameObjectManager::saveEditStates()
+{
+	for (int i = 0; i < this->objList.size(); i++) {
+		this->objList[i]->saveEditState();
+	}
+}
+
+void GameObjectManager::restoreEditStates()
+{
+	for (int i = 0; i < this->objList.size(); i++) {
+		this->objList[i]->restoreEditState();
+	}
+}
+
 GameObjectManager* GameObjectManager::getInstance()
 {
 	return sharedInstance;

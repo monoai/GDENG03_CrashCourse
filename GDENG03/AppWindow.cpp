@@ -48,15 +48,13 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	EngineBackend* backend = EngineBackend::getInstance();
+	//std::cout << "mode is: " << backend->getMode() << std::endl;
 	if (backend->getMode() == EngineBackend::EditorMode::PLAY) {
 		BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 		GameObjectManager::getInstance()->updateAll();
-	}
-	else if (backend->getMode() == EngineBackend::EditorMode::EDITOR) {
+	} else if (backend->getMode() == EngineBackend::EditorMode::EDITOR) {
 		GameObjectManager::getInstance()->updateAll();
-
-	}
-	else if (backend->getMode() == EngineBackend::EditorMode::PAUSED) {
+	} else if (backend->getMode() == EngineBackend::EditorMode::PAUSED) {
 		if (backend->insideFrameStep()) {
 			BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 			GameObjectManager::getInstance()->updateAll();
@@ -173,12 +171,12 @@ void AppWindow::onMouseMove(const Point mouse_pos)
 
 void AppWindow::onLeftMouseDown(const Point mouse_pos)
 {
-	std::cout << "Left mouse down" << std::endl;
+	//std::cout << "Left mouse down" << std::endl;
 }
 
 void AppWindow::onLeftMouseUp(const Point mouse_pos)
 {
-	std::cout << "Left mouse up" << std::endl;
+	//std::cout << "Left mouse up" << std::endl;
 }
 
 void AppWindow::onRightMouseDown(const Point mouse_pos)

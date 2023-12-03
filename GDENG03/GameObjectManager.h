@@ -13,6 +13,8 @@ public:
 	typedef std::unordered_map<std::string, AGameObject*> HashTable;
 
 	void applyEditorAction(EditorAction* action);
+	void saveEditStates();
+	void restoreEditStates();
 
 	enum PrimitiveType {
 		CUBE,

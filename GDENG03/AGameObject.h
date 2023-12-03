@@ -9,6 +9,7 @@
 
 class VertexShader;
 class PixelShader;
+class EditorAction;
 
 class AGameObject
 {
@@ -58,6 +59,9 @@ public:
 	Matrix4x4 getLocalMatrix();
 	float* getRawMatrix();
 
+	virtual void saveEditState();
+	virtual void restoreEditState();
+
 	// refactor this so that you could instead use these on both appwindow and gameobject instead of redeclaring their own versions
 
 	struct vertex {
@@ -80,8 +84,10 @@ protected:
 	Vector3D localPos;
 	Vector3D localScale;
 	Vector3D localRot;
+	AQuaternion orientation;
 	Matrix4x4 localMat;
 	ComponentList componentList;
+	EditorAction* lastEditState;
 	bool enabled = true;
 	bool overrideMatrix = false;
 };

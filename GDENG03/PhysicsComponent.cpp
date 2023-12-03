@@ -17,7 +17,7 @@ PhysicsComponent::PhysicsComponent(std::string name, AGameObject* owner) : AComp
 	Vector3D scale = this->getOwner()->getLocalScale();
 	reactphysics3d::Transform transform;
 	transform.setFromOpenGL(this->getOwner()->getPhysicsLocalMatrix());
-	reactphysics3d::BoxShape* boxShape = physicsCommon->createBoxShape(reactphysics3d::Vector3(scale.getX() / 2, scale.getY() / 2, scale.getZ() / 2)); //half extent
+	reactphysics3d::BoxShape* boxShape = physicsCommon->createBoxShape(reactphysics3d::Vector3(scale.getX(), scale.getY(), scale.getZ()));
 	this->rigidBody = physicsWorld->createRigidBody(transform);
 	this->rigidBody->addCollider(boxShape, transform);
 	this->rigidBody->updateMassPropertiesFromColliders();
@@ -44,6 +44,7 @@ void PhysicsComponent::perform(float deltaTime)
 	transform.getOpenGLMatrix(matrix);
 
 	this->getOwner()->recomputeMatrix(matrix);
+	//std::cout << "Owner is: " << this->getOwner()->getName() << "Component: " << this->name << std::endl;
 }
 
 reactphysics3d::RigidBody* PhysicsComponent::getRigidBody()
