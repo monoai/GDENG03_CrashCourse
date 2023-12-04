@@ -5,7 +5,7 @@
 #include "InputSystem.h"
 #include "ShaderLibrary.h"
 
-Cube::Cube(std::string name, bool skipInit) : AGameObject(name)
+Cube::Cube(std::string name, bool skipInit) : AGameObject(name, AGameObject::PrimitiveType::CUBE)
 {
 	if (skipInit)
 		return;

@@ -43,10 +43,9 @@ class AppWindow: public Window, public InputListener
 {
 public:
 	AppWindow();
-
-	//void update();
-
 	~AppWindow();
+	static AppWindow* getInstance();
+	static void initialize();
 	
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
@@ -56,6 +55,7 @@ public:
 
 	void initializeEngine();
 	void initializeUI();
+	void quitEngine();
 
 	virtual void onKeyDown(int key) override;
 	virtual void onKeyUp(int key) override;
@@ -66,6 +66,8 @@ public:
 	virtual void onRightMouseDown(const Point mouse_pos) override;
 	virtual void onRightMouseUp(const Point mouse_pos) override;
 private:
+	static AppWindow* sharedInstance;
+
 	SwapChain* m_swap_chain;
 	VertexBuffer* m_vb;
 	VertexShader* m_vs;

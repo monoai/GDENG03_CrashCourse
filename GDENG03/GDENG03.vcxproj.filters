@@ -82,6 +82,9 @@
     <Filter Include="GameEngine\EditorAction">
       <UniqueIdentifier>{ca5ea503-ddf5-4b89-845f-e88bed586a28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\SceneSaving">
+      <UniqueIdentifier>{8ac2ec1d-3637-48b9-8b4e-d6ef3d509d76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -239,6 +242,12 @@
     </ClCompile>
     <ClCompile Include="ActionScreen.cpp">
       <Filter>GameEngine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWriter.cpp">
+      <Filter>GameEngine\SceneSaving</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneReader.cpp">
+      <Filter>GameEngine\SceneSaving</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,6 +424,12 @@
     </ClInclude>
     <ClInclude Include="ActionScreen.h">
       <Filter>GameEngine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWriter.h">
+      <Filter>GameEngine\SceneSaving</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneReader.h">
+      <Filter>GameEngine\SceneSaving</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

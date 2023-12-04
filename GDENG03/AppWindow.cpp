@@ -20,12 +20,24 @@
 std::random_device dev;
 std::mt19937 rng(dev());
 
+AppWindow* AppWindow::sharedInstance = NULL;
+
 AppWindow::AppWindow()
 {
 }
 
 AppWindow::~AppWindow()
 {
+}
+
+AppWindow* AppWindow::getInstance()
+{
+	return sharedInstance;
+}
+
+void AppWindow::initialize()
+{
+	sharedInstance = new AppWindow();
 }
 
 void AppWindow::onCreate()
@@ -75,6 +87,9 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 	InputSystem::getInstance()->removeListener(this);
 	InputSystem::getInstance()->destroy();
 	//m_vb->release();
@@ -92,9 +107,6 @@ void AppWindow::onDestroy()
 	TextureManager::destroy();
 	EngineBackend::destroy();
 	ActionHistory::destroy();
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
 }
 
 void AppWindow::onFocus()

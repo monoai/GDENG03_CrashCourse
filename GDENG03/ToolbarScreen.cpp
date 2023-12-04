@@ -1,8 +1,19 @@
 #include "ToolbarScreen.h"
 #include "imgui.h"
+#include "imfilebrowser.h"
+#include "AppWindow.h"
+#include "SceneWriter.h"
+#include "SceneReader.h"
 
 ToolbarScreen::ToolbarScreen(std::string name) : AUIScreen(name)
 {
+	this->openSceneDialog = new ImGui::FileBrowser();
+	this->openSceneDialog->SetTitle("Open Scene");
+	this->openSceneDialog->SetTypeFilters({ ".iet" });
+
+	this->saveSceneDialog = new ImGui::FileBrowser(ImGuiFileBrowserFlags_EnterNewFilename);
+	this->saveSceneDialog->SetTitle("Save Scene");
+	this->saveSceneDialog->SetTypeFilters({ ".iet" });
 }
 
 void ToolbarScreen::drawUI()
@@ -12,10 +23,13 @@ void ToolbarScreen::drawUI()
 			if (ImGui::MenuItem("New", "Ctrl+N")) {
 			}
 			if (ImGui::MenuItem("Save", "Ctrl+S")) {
+				this->saveSceneDialog->Open();
 			}
 			if (ImGui::MenuItem("Open", "Ctrl+O")) {
+				this->openSceneDialog->Open();
 			}
 			if (ImGui::MenuItem("Exit", "Ctrl+W")) {
+				exit(0);
 			}
 			ImGui::EndMenu();
 		}
@@ -26,11 +40,11 @@ void ToolbarScreen::drawUI()
 			VertexShader* m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
 			if (ImGui::MenuItem("Create Cube")) {
-				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::CUBE);
+				GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::CUBE);
 				std::cout << "created cube" << std::endl;
 			}
 			if (ImGui::MenuItem("Create Textured Cube")) {
-				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::TEXTURED_CUBE);
+				GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::TEXTURED_CUBE);
 				std::cout << "created cube" << std::endl;
 			}
 			if (ImGui::MenuItem("Create Sphere")) {
@@ -38,7 +52,7 @@ void ToolbarScreen::drawUI()
 				std::cout << "created sphere" << std::endl;
 			}
 			if (ImGui::MenuItem("Create Plane")) {
-				GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PLANE);
+				GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PLANE);
 				std::cout << "created plane" << std::endl;
 			}
 			if (ImGui::BeginMenu("Light")) {
@@ -50,11 +64,11 @@ void ToolbarScreen::drawUI()
 			}
 			if (ImGui::BeginMenu("Physics")) {
 				if (ImGui::MenuItem("Create Physics Cube")) {
-					GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PHYSICS_CUBE);
+					GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PHYSICS_CUBE);
 					std::cout << "created phys cube" << std::endl;
 				}
 				if (ImGui::MenuItem("Create Physics Plane")) {
-					GameObjectManager::getInstance()->createObject(GameObjectManager::PrimitiveType::PHYSICS_PLANE);
+					GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PHYSICS_PLANE);
 					std::cout << "created phys cube" << std::endl;
 				}
 				ImGui::EndMenu();
@@ -62,5 +76,25 @@ void ToolbarScreen::drawUI()
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+	}
+
+	this->openSceneDialog->Display();
+	this->saveSceneDialog->Display();
+
+	if (this->saveSceneDialog->HasSelected())
+	{
+		SceneWriter writer = SceneWriter(this->saveSceneDialog->GetSelected().string());
+		writer.writeToFile();
+
+		this->saveSceneDialog->ClearSelected();
+		this->saveSceneDialog->Close();
+	}
+
+	else if (this->openSceneDialog->HasSelected()) {
+		SceneReader reader = SceneReader(this->openSceneDialog->GetSelected().string());
+		reader.readFromFile();
+
+		this->openSceneDialog->ClearSelected();
+		this->openSceneDialog->Close();
 	}
 }

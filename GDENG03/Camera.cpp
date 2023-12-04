@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "InputSystem.h"
 
-Camera::Camera(std::string name) : AGameObject(name)
+Camera::Camera(std::string name) : AGameObject(name, AGameObject::PrimitiveType::CAMERA)
 {
 	this->setPosition(0.0f, 0.0f, -4.0f);
 	this->updateViewMatrix();

@@ -1,9 +1,10 @@
 #include "AGameObject.h"
 #include "EditorAction.h"
 
-AGameObject::AGameObject(std::string name)
+AGameObject::AGameObject(std::string name, PrimitiveType type)
 {
 	this->name = name;
+	this->objectType = type;
 	this->localRot = Vector3D(0.0f,0.0f,0.0f);
 	this->localPos = Vector3D(0.0f, 0.0f, 0.0f);
 	this->localScale = Vector3D(1.0f, 1.0f, 1.0f);
@@ -12,6 +13,11 @@ AGameObject::AGameObject(std::string name)
 
 AGameObject::~AGameObject()
 {
+}
+
+AGameObject::PrimitiveType AGameObject::getObjectType()
+{
+	return this->objectType;
 }
 
 void AGameObject::draw(int width, int height)

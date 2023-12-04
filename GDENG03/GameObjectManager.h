@@ -16,15 +16,6 @@ public:
 	void saveEditStates();
 	void restoreEditStates();
 
-	enum PrimitiveType {
-		CUBE,
-		TEXTURED_CUBE,
-		PLANE,
-		SPHERE,
-		PHYSICS_CUBE,
-		PHYSICS_PLANE
-	};
-
 	static GameObjectManager* getInstance();
 	static void initialize();
 	static void destroy();
@@ -35,7 +26,8 @@ public:
 	void updateAll();
 	void renderAll(int vp_width, int vp_height);
 	void addObject(AGameObject* gameObject);
-	void createObject(PrimitiveType type);
+	void createObject(AGameObject::PrimitiveType type);
+	void createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale);
 	void deleteObject(AGameObject* gameObject);
 	void deleteObjectByName(std::string name);
 	void setSelectedObject(std::string name);

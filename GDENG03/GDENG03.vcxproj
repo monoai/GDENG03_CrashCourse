@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes\imgui\misc\cpp;$(ProjectDir)includes\imgui\backends;$(ProjectDir)includes\imgui;$(ProjectDir)includes\ReactPhysics3D\include;$(ProjectDir)includes\DirectXTex\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)includes\imgui\misc\cpp;$(ProjectDir)includes\imgui\backends;$(ProjectDir)includes\imgui;$(ProjectDir)includes\ReactPhysics3D\include;$(ProjectDir)includes\DirectXTex\include;$(ProjectDir)includes\imfilebrowser</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -179,6 +179,8 @@
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ScenePlayScreen.cpp" />
+    <ClCompile Include="SceneReader.cpp" />
+    <ClCompile Include="SceneWriter.cpp" />
     <ClCompile Include="ShaderLibrary.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TexturedCube.cpp" />
@@ -235,6 +237,8 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ScenePlayScreen.h" />
+    <ClInclude Include="SceneReader.h" />
+    <ClInclude Include="SceneWriter.h" />
     <ClInclude Include="ShaderLibrary.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TexturedCube.h" />

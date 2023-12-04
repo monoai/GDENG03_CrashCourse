@@ -14,8 +14,15 @@ class EditorAction;
 class AGameObject
 {
 public:
-	AGameObject(std::string name);
-	~AGameObject();
+	enum PrimitiveType {
+		CAMERA,
+		CUBE,
+		TEXTURED_CUBE,
+		PLANE,
+		SPHERE,
+		PHYSICS_CUBE,
+		PHYSICS_PLANE
+	};
 
 	struct AQuaternion {
 		float w = 0.0f;
@@ -24,7 +31,12 @@ public:
 		float z = 0.0f;
 	};
 
+	AGameObject(std::string name, PrimitiveType type);
+	~AGameObject();
+
 	typedef std::vector<AComponent*> ComponentList;
+
+	PrimitiveType getObjectType();
 
 	virtual void update(double deltaTime) = 0;
 	virtual void draw(int width, int height);
@@ -86,6 +98,7 @@ protected:
 	Vector3D localRot;
 	AQuaternion orientation;
 	Matrix4x4 localMat;
+	PrimitiveType objectType;
 	ComponentList componentList;
 	EditorAction* lastEditState;
 	bool enabled = true;
