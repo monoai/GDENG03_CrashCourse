@@ -28,6 +28,9 @@ private:
 	float pos[3] = { 0.0f, 0.0f, 0.0f };
 	float rot[3] = { 0.0f, 0.0f, 0.0f };
 	float scale[3] = { 1.0f, 1.0f, 1.0f };
+	float force[3] = { 0.0f, 0.0f, 0.0f };
+	reactphysics3d::BodyType oldType;
+	bool isStatic = false;
 	bool popupOpen = false;
 
 	int BUTTON_WIDTH = 225;

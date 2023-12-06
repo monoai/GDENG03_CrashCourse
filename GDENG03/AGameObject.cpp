@@ -1,5 +1,7 @@
 #include "AGameObject.h"
 #include "EditorAction.h"
+#include "PhysicsComponent.h"
+#include "BaseComponentSystem.h"
 
 AGameObject::AGameObject(std::string name, PrimitiveType type)
 {
@@ -263,6 +265,21 @@ void AGameObject::restoreEditState()
 		this->localScale = this->lastEditState->getStoredScale();
 		this->orientation = this->lastEditState->getStoredOrientation();
 		this->localMat = this->lastEditState->getStoredMatrix();
+		PhysicsComponent* component = (PhysicsComponent*)this->findComponentByType(AComponent::ComponentType::Physics, "PhysicsComponent_" + this->getName());
+		if (component != NULL) {
+			// check the required physics values first
+			reactphysics3d::BodyType type = component->getRigidBody()->getType();
+			bool gravity = component->getRigidBody()->isGravityEnabled();
+			bool isEnabled = component->getRigidBody()->isActive();
+			this->detachComponent(component);
+			delete component;
+
+			component = new PhysicsComponent("PhysicsComponent_" + this->getName(), this);
+			component->getRigidBody()->setType(type);
+			component->getRigidBody()->enableGravity(gravity);
+			component->getRigidBody()->setIsActive(isEnabled);
+			this->attachComponent(component);
+		}
 		this->lastEditState = NULL;
 		std::cout << "objName: " << this->getName() << std::endl;
 		std::cout << "localPos: " << this->localPos.getX() << this->localPos.getY() << this->localPos.getZ() << std::endl;

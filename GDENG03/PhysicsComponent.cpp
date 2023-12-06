@@ -21,6 +21,7 @@ PhysicsComponent::PhysicsComponent(std::string name, AGameObject* owner) : AComp
 	this->rigidBody = physicsWorld->createRigidBody(transform);
 	this->rigidBody->addCollider(boxShape, transform);
 	this->rigidBody->updateMassPropertiesFromColliders();
+	//this->rigidBody->setLocalCenterOfMass(reactphysics3d::Vector3(scale.getX()/2, scale.getY()/2, scale.getZ()/2));
 	this->rigidBody->setMass(this->mass);
 	this->rigidBody->setType(reactphysics3d::BodyType::DYNAMIC);
 
@@ -34,6 +35,7 @@ PhysicsComponent::PhysicsComponent(std::string name, AGameObject* owner) : AComp
 PhysicsComponent::~PhysicsComponent()
 {
 	BaseComponentSystem::getInstance()->getPhysicsSystem()->unregisterComponent(this);
+	BaseComponentSystem::getInstance()->getPhysicsSystem()->getPhysicsWorld()->destroyRigidBody(this->rigidBody);
 	AComponent::~AComponent();
 }
 

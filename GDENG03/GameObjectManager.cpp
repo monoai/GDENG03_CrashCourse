@@ -93,51 +93,55 @@ void GameObjectManager::renderAll(int vp_width, int vp_height)
 
 void GameObjectManager::addObject(AGameObject* gameObject)
 {
-	if (this->objMap[gameObject->getName()] != NULL) {
+	this->objMap[gameObject->getName()] = gameObject;
+	this->objList.push_back(gameObject);
+}
+
+std::string GameObjectManager::checkName(std::string name)
+{
+	if (this->objMap[name] != NULL) {
 		int count = 1;
-		std::string revisedString = gameObject->getName() + " " + "(" + std::to_string(count) + ")";
+		std::string revisedString = name + " " + "(" + std::to_string(count) + ")";
 		while (this->objMap[revisedString] != NULL) {
 			count++;
-			revisedString = gameObject->getName() + " " + "(" + std::to_string(count) + ")";
+			revisedString = name + " " + "(" + std::to_string(count) + ")";
 		}
-		gameObject->name = revisedString;
-		this->objMap[revisedString] = gameObject;
+		name = revisedString;
+		return name;
 	}
 	else {
-		this->objMap[gameObject->getName()] = gameObject;
+		return name;
 	}
-
-	this->objList.push_back(gameObject);
 }
 
 void GameObjectManager::createObject(AGameObject::PrimitiveType type)
 {
 	if (type == AGameObject::PrimitiveType::CUBE) {
-		Cube* cube = new Cube("Cube");
+		Cube* cube = new Cube(checkName("Cube"));
 		cube->setPosition(0.0f, 0.0f, 0.0f);
 		cube->setScale(1.0f, 1.0f, 1.0f);
 		this->addObject(cube);
 	}
 
 	else if (type == AGameObject::PrimitiveType::TEXTURED_CUBE) {
-		TexturedCube* cube = new TexturedCube("Cube_Textured");
+		TexturedCube* cube = new TexturedCube(checkName("Cube_Textured"));
 		cube->setPosition(0.0f, 0.0f, 0.0f);
 		cube->setScale(1.0f, 1.0f, 1.0f);
 		this->addObject(cube);
 	}
 
 	else if (type == AGameObject::PrimitiveType::PLANE) {
-		Plane* plane = new Plane("Plane");
+		Plane* plane = new Plane(checkName("Plane"));
 		this->addObject(plane);
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_CUBE) {
-		PhysicsCube* cube = new PhysicsCube("Cube_Physics");
+		PhysicsCube* cube = new PhysicsCube(checkName("Cube_Physics"));
 		this->addObject(cube);
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_PLANE) {
-		PhysicsPlane* plane = new PhysicsPlane("Plane_Physics");
+		PhysicsPlane* plane = new PhysicsPlane(checkName("Plane_Physics"));
 		this->addObject(plane);
 	}
 }

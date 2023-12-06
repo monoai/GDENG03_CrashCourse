@@ -5,6 +5,8 @@
 #include "TextureManager.h"
 #include "TexturedCube.h"
 #include "TextureRenderer.h"
+#include "BaseComponentSystem.h"
+#include "PhysicsComponent.h"
 
 InspectorScreen::InspectorScreen(std::string name) : AUIScreen(name)
 {
@@ -67,9 +69,61 @@ void InspectorScreen::drawUI()
 		}
 
 		// physics
-		ImGui::Text("Rigidbody: None");
-		if (ImGui::Button("Add Rigidbody", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+		PhysicsComponent* component = (PhysicsComponent*)this->selectedObj->findComponentByType(AComponent::ComponentType::Physics, "PhysicsComponent_" + this->selectedObj->getName());
+		if (component != NULL) {
+			//std::cout << "has physics" << std::endl;
+			// get physics values
+			bool gravity = component->getRigidBody()->isGravityEnabled();
+			float mass = component->getRigidBody()->getMass();
+			bool isEnabled = component->getRigidBody()->isActive();
+			reactphysics3d::BodyType type = component->getRigidBody()->getType();
+			if (type == reactphysics3d::BodyType::STATIC) {
+				isStatic = true;
+			}
+			else {
+				isStatic = false;
+				oldType = type;
+			}
 
+			ImGui::Text("Rigidbody:");
+			if (ImGui::Button("Detach", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+				this->selectedObj->detachComponent(component);
+				delete component;
+			}
+			if (ImGui::Checkbox("Is Enabled", &isEnabled)) {
+				component->getRigidBody()->setIsActive(isEnabled);
+			}
+			if (ImGui::Checkbox("Is Static", &isStatic)) {
+				if (isStatic) {
+					component->getRigidBody()->setType(reactphysics3d::BodyType::STATIC);
+				}
+				else {
+					component->getRigidBody()->setType(oldType);
+				}
+			}
+			if (ImGui::Checkbox("Enable Gravity", &gravity)) {
+				component->getRigidBody()->enableGravity(gravity);
+			}
+			ImGui::Text("Set Mass:");
+			if (ImGui::InputFloat("kg", &mass)) {
+				component->getRigidBody()->setMass(mass);
+			}
+			ImGui::Text("Apply Force Vector: ");
+			ImGui::DragFloat3("", this->force);
+			if (ImGui::Button("Apply Force", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+				component->getRigidBody()->applyLocalForceAtCenterOfMass(reactphysics3d::Vector3(this->force[0], this->force[1], this->force[2]));
+				//component->getRigidBody()->applyLocalForceAtLocalPosition(reactphysics3d::Vector3(this->force[0], this->force[1], this->force[2]), reactphysics3d::Vector3(0.5, 0.5, 0.5));
+				//std::cout << "force: " << component->getRigidBody()->getForce().to_string() << std::endl;
+				//std::cout << "center of mass: " << component->getRigidBody()->getLocalCenterOfMass().to_string() << std::endl;
+			}
+
+		}
+		else {
+			//std::cout << "no physics" << std::endl;
+			ImGui::Text("Rigidbody: None");
+			if (ImGui::Button("Add Rigidbody", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+				this->selectedObj->attachComponent(new PhysicsComponent("PhysicsComponent_" + this->selectedObj->getName(), this->selectedObj));
+			}
 		}
 
 		// materials

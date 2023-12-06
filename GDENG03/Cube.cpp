@@ -4,6 +4,7 @@
 #include "SceneCameraHandler.h"
 #include "InputSystem.h"
 #include "ShaderLibrary.h"
+#include "PhysicsComponent.h"
 
 Cube::Cube(std::string name, bool skipInit) : AGameObject(name, AGameObject::PrimitiveType::CUBE)
 {

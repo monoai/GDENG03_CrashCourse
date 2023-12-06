@@ -26,6 +26,7 @@ public:
 	void updateAll();
 	void renderAll(int vp_width, int vp_height);
 	void addObject(AGameObject* gameObject);
+	std::string checkName(std::string name);
 	void createObject(AGameObject::PrimitiveType type);
 	void createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale);
 	void deleteObject(AGameObject* gameObject);

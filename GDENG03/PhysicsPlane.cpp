@@ -66,9 +66,9 @@ PhysicsPlane::PhysicsPlane(std::string name, bool skipInit) : Cube(name, skipIni
 	this->setScale(32.0f, 0.2f, 32.0f);
 	this->setRotation(0.0f, 0.0f, 0.0f);
 	this->updateLocalMatrix();
-	this->attachComponent(new PhysicsComponent("PhysicsComponent", this));
+	this->attachComponent(new PhysicsComponent("PhysicsComponent_" + this->name, this));
 
-	PhysicsComponent* component = (PhysicsComponent*)this->findComponentByType(AComponent::ComponentType::Physics, "PhysicsComponent");
+	PhysicsComponent* component = (PhysicsComponent*)this->findComponentByType(AComponent::ComponentType::Physics, "PhysicsComponent_" + this->name);
 	component->getRigidBody()->setType(reactphysics3d::BodyType::KINEMATIC);
 	//component->getRigidBody()->setMass(0.0f);
 }
