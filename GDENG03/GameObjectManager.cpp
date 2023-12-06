@@ -93,7 +93,20 @@ void GameObjectManager::renderAll(int vp_width, int vp_height)
 
 void GameObjectManager::addObject(AGameObject* gameObject)
 {
-	this->objMap[gameObject->getName()] = gameObject;
+	if (this->objMap[gameObject->getName()] != NULL) {
+		int count = 1;
+		std::string revisedString = gameObject->getName() + " " + "(" + std::to_string(count) + ")";
+		while (this->objMap[revisedString] != NULL) {
+			count++;
+			revisedString = gameObject->getName() + " " + "(" + std::to_string(count) + ")";
+		}
+		gameObject->name = revisedString;
+		this->objMap[revisedString] = gameObject;
+	}
+	else {
+		this->objMap[gameObject->getName()] = gameObject;
+	}
+
 	this->objList.push_back(gameObject);
 }
 
@@ -204,7 +217,7 @@ void GameObjectManager::setSelectedObject(std::string name)
 {
 	if (this->objMap[name] != NULL) {
 		this->setSelectedObject(this->objMap[name]);
-		std::cout << "selected " << this->objMap[name] << std::endl;
+		std::cout << "selected " << this->objMap[name]->getName() << std::endl;
 	}
 }
 

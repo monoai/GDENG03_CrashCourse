@@ -91,6 +91,8 @@ public:
 		float m_time = 0.0f;
 	};
 
+	friend class GameObjectManager;
+
 protected:
 	std::string name;
 	Vector3D localPos;

@@ -73,27 +73,25 @@ void InspectorScreen::drawUI()
 		}
 
 		// materials
-		if (this->selectedObj->getObjectType() != AGameObject::TEXTURED_CUBE)
+		if (this->selectedObj->getObjectType() == AGameObject::TEXTURED_CUBE)
 		{
-			return;
-		}
+			TexturedCube* texturedObj = static_cast<TexturedCube*>(this->selectedObj);
+			this->materialPath = texturedObj->getRenderer()->getMaterialPath();
+			this->FormatMatImage();
+			ImGui::SetCursorPosX(50);
+			ImGui::Image(static_cast<void*>(this->materialDisplay->getShaderResource()), ImVec2(150, 150));
 
-		TexturedCube* texturedObj = static_cast<TexturedCube*>(this->selectedObj);
-		this->materialPath = texturedObj->getRenderer()->getMaterialPath();
-		this->FormatMatImage();
-		ImGui::SetCursorPosX(50);
-		ImGui::Image(static_cast<void*>(this->materialDisplay->getShaderResource()), ImVec2(150, 150));
-
-		std::vector<std::string> paths = split(this->materialPath, '\\');
-		this->materialName = paths[paths.size() - 1];
-		std::string displayText = "Material: " + this->materialName;
-		ImGui::Text(displayText.c_str());
-		if (ImGui::Button("Add Material", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
-			this->popupOpen = !this->popupOpen;
-			UINames uiNames;
-			MaterialScreen* materialScreen = static_cast<MaterialScreen*>(UIManager::getInstance()->findUIByName(uiNames.MATERIAL_SCREEN));
-			materialScreen->linkInspectorScreen(this, this->materialPath);
-			UIManager::getInstance()->setEnabled(uiNames.MATERIAL_SCREEN, this->popupOpen);
+			std::vector<std::string> paths = split(this->materialPath, '\\');
+			this->materialName = paths[paths.size() - 1];
+			std::string displayText = "Material: " + this->materialName;
+			ImGui::Text(displayText.c_str());
+			if (ImGui::Button("Add Material", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+				this->popupOpen = !this->popupOpen;
+				UINames uiNames;
+				MaterialScreen* materialScreen = static_cast<MaterialScreen*>(UIManager::getInstance()->findUIByName(uiNames.MATERIAL_SCREEN));
+				materialScreen->linkInspectorScreen(this, this->materialPath);
+				UIManager::getInstance()->setEnabled(uiNames.MATERIAL_SCREEN, this->popupOpen);
+			}
 		}
 	}
 	else {
