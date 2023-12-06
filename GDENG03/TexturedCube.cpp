@@ -3,9 +3,11 @@
 #include "ShaderLibrary.h"
 #include "SceneCameraHandler.h"
 #include "TextureManager.h"
+#include "TextureRenderer.h"
 
 TexturedCube::TexturedCube(std::string name) : Cube(name, true)
 {
+	this->objectType = PrimitiveType::TEXTURED_CUBE;
 	ShaderNames shaderNames;
 	void* shader_byte_code = NULL;
 	size_t size_shader = 0;
@@ -107,20 +109,28 @@ TexturedCube::TexturedCube(std::string name) : Cube(name, true)
 	deviceContext->setRenderConfig(ShaderLibrary::getInstance()->getVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME),
 	ShaderLibrary::getInstance()->getPixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME));
 
+	TextureRenderer* defaultRenderer = new TextureRenderer();
+	defaultRenderer->setMaterialPath("./assets/textures/wood.jpg");
+	this->attachRenderer(defaultRenderer);
 }
 
 TexturedCube::~TexturedCube()
 {
 }
 
+void TexturedCube::attachRenderer(TextureRenderer* renderer)
+{
+	this->renderer = renderer;
+}
+
 void TexturedCube::draw(int width, int height)
 {
 	ShaderNames shaderNames;
 	DeviceContext* deviceContext = GraphicsEngine::get()->getImmediateDeviceContext();
-	Texture* woodTex = (Texture*)TextureManager::getInstance()->createTextureFromFile(L"./assets/textures/wood.jpg");
+	//Texture* woodTex = (Texture*)TextureManager::getInstance()->createTextureFromFile(L"./assets/textures/wood.jpg");
 
 	//set vertex shader and pixel shader for the object
-	deviceContext->setTexture(woodTex);
+	deviceContext->setTexture(this->renderer->getTexture());
 	deviceContext->setRenderConfig(ShaderLibrary::getInstance()->getVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME), ShaderLibrary::getInstance()->getPixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME));
 
 	constant cc{};
@@ -156,4 +166,9 @@ void TexturedCube::draw(int width, int height)
 	deviceContext->setVertexBuffer(this->m_vb);
 
 	deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+}
+
+TextureRenderer* TexturedCube::getRenderer() const
+{
+	return this->renderer;
 }

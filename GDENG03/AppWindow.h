@@ -18,6 +18,7 @@
 #include "ProfilerScreen.h"
 #include "ScenePlayScreen.h"
 #include "ActionScreen.h"
+#include "MaterialScreen.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"

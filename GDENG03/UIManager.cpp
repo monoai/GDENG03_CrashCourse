@@ -33,8 +33,29 @@ void UIManager::drawAllUI()
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void UIManager::pushList(AUIScreen* screen)
+void UIManager::setEnabled(std::string uiName, bool flag)
 {
+	if (this->uiTable[uiName] != nullptr)
+	{
+		this->uiTable[uiName]->SetEnabled(flag);
+	}
+}
+
+AUIScreen* UIManager::findUIByName(std::string uiName)
+{
+	if (this->uiTable[uiName] != nullptr)
+	{
+		return this->uiTable[uiName];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void UIManager::pushList(std::string name, AUIScreen* screen)
+{
+	this->uiTable[name] = screen;
 	this->uiList.push_back(screen);
 }
 

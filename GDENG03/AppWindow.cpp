@@ -154,12 +154,17 @@ void AppWindow::initializeUI()
 	ProfilerScreen* profilerscreen = new ProfilerScreen(names.PROFILER_SCREEN);
 	ScenePlayScreen* sceneplayscreen = new ScenePlayScreen(names.SCENEPLAY_SCREEN);
 	ActionScreen* actionscreen = new ActionScreen(names.ACTION_SCREEN);
+	MaterialScreen* materialscreen = new MaterialScreen(names.MATERIAL_SCREEN);
+	materialscreen->SetEnabled(false);
+	/*
 	UIManager::getInstance()->pushList(toolscreen);
 	UIManager::getInstance()->pushList(outlinerscreen);
 	UIManager::getInstance()->pushList(inspectorscreen);
 	UIManager::getInstance()->pushList(profilerscreen);
 	UIManager::getInstance()->pushList(sceneplayscreen);
 	UIManager::getInstance()->pushList(actionscreen);
+	UIManager::getInstance()->pushList(materialscreen);
+	*/
 }
 
 void AppWindow::onKeyDown(int key)

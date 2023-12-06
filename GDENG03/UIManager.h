@@ -19,6 +19,7 @@ public:
 	const std::string HIERARCHY_SCREEN = "HIERARCHY_SCREEN";
 	const std::string SCENEPLAY_SCREEN = "SCENEPLAY_SCREEN";
 	const std::string ACTION_SCREEN = "ACTION_SCREEN";
+	const std::string MATERIAL_SCREEN = "MATERIAL_SCREEN";
 };
 
 class UIManager
@@ -32,7 +33,9 @@ public:
 	static void destroy();
 
 	void drawAllUI();
-	void pushList(AUIScreen* screen);
+	void setEnabled(std::string uiName, bool flag);
+	AUIScreen* findUIByName(std::string uiName);
+	void pushList(std::string name, AUIScreen* screen);
 
 	static const int WINDOW_WIDTH = 1280;
 	static const int WINDOW_HEIGHT = 720;

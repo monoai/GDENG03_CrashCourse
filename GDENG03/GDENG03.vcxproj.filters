@@ -55,9 +55,6 @@
     <Filter Include="GameEngine\UISystem">
       <UniqueIdentifier>{45f61beb-fdb3-43ea-860b-549ff0bd9cf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\Screens">
-      <UniqueIdentifier>{39259d39-56b4-4043-bd7e-9a65a6e576a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\ComponentSystem">
       <UniqueIdentifier>{d1a3305e-47c4-4b6f-999f-023b8f189a6d}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,12 @@
     </Filter>
     <Filter Include="GameEngine\SceneSaving">
       <UniqueIdentifier>{8ac2ec1d-3637-48b9-8b4e-d6ef3d509d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Renderer">
+      <UniqueIdentifier>{d59f639b-afba-4bed-813f-9fe1d580502b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UISystem\Screens">
+      <UniqueIdentifier>{39259d39-56b4-4043-bd7e-9a65a6e576a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -145,16 +148,16 @@
       <Filter>GameEngine\UISystem</Filter>
     </ClCompile>
     <ClCompile Include="OutlinerScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="InspectorScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="ToolbarScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="ProfilerScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>GameEngine\GameObject</Filter>
@@ -229,7 +232,7 @@
       <Filter>GameEngine\EngineBackend</Filter>
     </ClCompile>
     <ClCompile Include="ScenePlayScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="EditorAction.cpp">
       <Filter>GameEngine\EditorAction</Filter>
@@ -241,13 +244,22 @@
       <Filter>GameEngine\EditorAction</Filter>
     </ClCompile>
     <ClCompile Include="ActionScreen.cpp">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
     <ClCompile Include="SceneWriter.cpp">
       <Filter>GameEngine\SceneSaving</Filter>
     </ClCompile>
     <ClCompile Include="SceneReader.cpp">
       <Filter>GameEngine\SceneSaving</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderer.cpp">
+      <Filter>GameEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="ABaseRenderer.cpp">
+      <Filter>GameEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialScreen.cpp">
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,16 +333,16 @@
       <Filter>GameEngine\UISystem</Filter>
     </ClInclude>
     <ClInclude Include="OutlinerScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="InspectorScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="ToolbarScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="ProfilerScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
       <Filter>GameEngine\GameObject</Filter>
@@ -411,7 +423,7 @@
       <Filter>GameEngine\EngineBackend</Filter>
     </ClInclude>
     <ClInclude Include="ScenePlayScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="EditorAction.h">
       <Filter>GameEngine\EditorAction</Filter>
@@ -423,13 +435,22 @@
       <Filter>GameEngine\EditorAction</Filter>
     </ClInclude>
     <ClInclude Include="ActionScreen.h">
-      <Filter>GameEngine\Screens</Filter>
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
     <ClInclude Include="SceneWriter.h">
       <Filter>GameEngine\SceneSaving</Filter>
     </ClInclude>
     <ClInclude Include="SceneReader.h">
       <Filter>GameEngine\SceneSaving</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderer.h">
+      <Filter>GameEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ABaseRenderer.h">
+      <Filter>GameEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialScreen.h">
+      <Filter>GameEngine\UISystem\Screens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

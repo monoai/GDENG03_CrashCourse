@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ABaseRenderer.cpp" />
     <ClCompile Include="AComponent.cpp" />
     <ClCompile Include="ActionHistory.cpp" />
     <ClCompile Include="ActionMemento.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="includes\imgui\imgui_tables.cpp" />
     <ClCompile Include="includes\imgui\imgui_widgets.cpp" />
     <ClCompile Include="includes\imgui\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="MaterialScreen.cpp" />
     <ClCompile Include="OutlinerScreen.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
@@ -186,6 +188,7 @@
     <ClCompile Include="TexturedCube.cpp" />
     <ClCompile Include="TexturedVertexBuffer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TextureRenderer.cpp" />
     <ClCompile Include="ToolbarScreen.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="ProfilerScreen.cpp" />
@@ -197,6 +200,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABaseRenderer.h" />
     <ClInclude Include="AComponent.h" />
     <ClInclude Include="ActionHistory.h" />
     <ClInclude Include="ActionMemento.h" />
@@ -223,6 +227,7 @@
     <ClInclude Include="includes\imgui\imstb_textedit.h" />
     <ClInclude Include="includes\imgui\imstb_truetype.h" />
     <ClInclude Include="includes\imgui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="MaterialScreen.h" />
     <ClInclude Include="OutlinerScreen.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputListener.h" />
@@ -244,6 +249,7 @@
     <ClInclude Include="TexturedCube.h" />
     <ClInclude Include="TexturedVertexBuffer.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="ToolbarScreen.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Point.h" />
