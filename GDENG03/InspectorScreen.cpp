@@ -58,6 +58,13 @@ void InspectorScreen::drawUI()
 		if (ImGui::Checkbox("Enabled", &enabled)) { 
 			this->selectedObj->setEnabled(enabled); 
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Delete")) {
+			GameObjectManager::getInstance()->deleteObject(this->selectedObj);
+			GameObjectManager::getInstance()->setSelectedObject(NULL);
+			ImGui::End();
+			return;
+		}
 		if (ImGui::DragFloat3("Position", this->pos)) {
 			this->transUpdate(); 
 		}
