@@ -4,7 +4,7 @@
 
 Plane::Plane(std::string name, bool skipInit) : Cube(name, skipInit)
 {
-	this->objectType = PrimitiveType::PHYSICS_PLANE;
+	this->objectType = PrimitiveType::PLANE;
 	ShaderNames shaderNames;
 	void* shader_byte_code = NULL;
 	size_t size_shader = 0;
