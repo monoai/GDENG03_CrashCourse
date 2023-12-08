@@ -16,8 +16,8 @@ SceneWriter::~SceneWriter()
 
 void SceneWriter::writeToFile()
 {
-	std::string fileDir = this->directory + ".iet";
-	if (this->directory.find(".iet") != std::string::npos) {
+	std::string fileDir = this->directory;
+	if (this->directory.find(".level") != std::string::npos) {
 		fileDir = this->directory;
 	}
 

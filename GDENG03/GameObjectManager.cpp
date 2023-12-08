@@ -157,7 +157,7 @@ void GameObjectManager::createObject(AGameObject::PrimitiveType type)
 void GameObjectManager::createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale)
 {
 	if (type == AGameObject::PrimitiveType::CUBE) {
-		Cube* cube = new Cube(name);
+		Cube* cube = new Cube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -165,7 +165,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PLANE) {
-		Plane* plane = new Plane(name);
+		Plane* plane = new Plane(checkName(name));
 		plane->setPosition(position);
 		plane->setRotation(rotation);
 		plane->setScale(scale);
@@ -173,7 +173,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::TEXTURED_CUBE) {
-		TexturedCube* cube = new TexturedCube(name);
+		TexturedCube* cube = new TexturedCube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -181,7 +181,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_CUBE) {
-		PhysicsCube* cube = new PhysicsCube(name);
+		PhysicsCube* cube = new PhysicsCube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -189,7 +189,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_PLANE) {
-		PhysicsPlane* plane = new PhysicsPlane(name);
+		PhysicsPlane* plane = new PhysicsPlane(checkName(name));
 		plane->setPosition(position);
 		plane->setRotation(rotation);
 		plane->setScale(scale);
@@ -200,7 +200,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 void GameObjectManager::createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale, reactphysics3d::BodyType bodyType, float mass, bool gravity, bool isEnabled)
 {
 	if (type == AGameObject::PrimitiveType::CUBE) {
-		Cube* cube = new Cube(name);
+		Cube* cube = new Cube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -209,7 +209,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PLANE) {
-		Plane* plane = new Plane(name);
+		Plane* plane = new Plane(checkName(name));
 		plane->setPosition(position);
 		plane->setRotation(rotation);
 		plane->setScale(scale);
@@ -218,7 +218,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::TEXTURED_CUBE) {
-		TexturedCube* cube = new TexturedCube(name);
+		TexturedCube* cube = new TexturedCube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -227,7 +227,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_CUBE) {
-		PhysicsCube* cube = new PhysicsCube(name);
+		PhysicsCube* cube = new PhysicsCube(checkName(name));
 		cube->setPosition(position);
 		cube->setRotation(rotation);
 		cube->setScale(scale);
@@ -236,7 +236,7 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 	}
 
 	else if (type == AGameObject::PrimitiveType::PHYSICS_PLANE) {
-		PhysicsPlane* plane = new PhysicsPlane(name);
+		PhysicsPlane* plane = new PhysicsPlane(checkName(name));
 		plane->setPosition(position);
 		plane->setRotation(rotation);
 		plane->setScale(scale);

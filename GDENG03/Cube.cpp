@@ -18,16 +18,16 @@ Cube::Cube(std::string name, bool skipInit) : AGameObject(name, AGameObject::Pri
 
 	vertex quadList[] = {
 		//FRONT FACE
-		{Vector3D(-0.75f,-0.75f,-0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,0.75f,-0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,0.75f,-0.75f), Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,-0.75f,-0.75f), Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.5f,0.5f,-0.5f), Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.5f,-0.5f,-0.5f), Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 
 		//BACK FACE
-		{Vector3D(0.75f,-0.75f,0.75f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(0.75f,0.75f,0.75f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,0.75f,0.75f),   Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
-		{Vector3D(-0.75f,-0.75f,0.75f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.5f,-0.5f,0.5f),    Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(0.5f,0.5f,0.5f),    Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.5f,0.5f,0.5f),   Vector3D(1.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
+		{Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(0.0f,0.0f,1.0f),  Vector3D(1.0f,0.0f,0.0f) },
 	};
 
 	this->m_vb = GraphicsEngine::get()->createVertexBuffer(quadList, sizeof(vertex), ARRAYSIZE(quadList), shader_byte_code, size_shader);

@@ -9,11 +9,11 @@ ToolbarScreen::ToolbarScreen(std::string name) : AUIScreen(name)
 {
 	this->openSceneDialog = new ImGui::FileBrowser();
 	this->openSceneDialog->SetTitle("Open Scene");
-	this->openSceneDialog->SetTypeFilters({ ".iet" });
+	this->openSceneDialog->SetTypeFilters({ ".iet", ".level", ".unity"});
 
 	this->saveSceneDialog = new ImGui::FileBrowser(ImGuiFileBrowserFlags_EnterNewFilename);
 	this->saveSceneDialog->SetTitle("Save Scene");
-	this->saveSceneDialog->SetTypeFilters({ ".iet" });
+	this->saveSceneDialog->SetTypeFilters({ ".iet", ".level"});
 }
 
 void ToolbarScreen::drawUI()
