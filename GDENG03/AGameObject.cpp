@@ -195,11 +195,10 @@ void AGameObject::recomputeMatrix(float matrix[16])
 	matrix4x4[3][2] = matrix[14];
 	matrix4x4[3][3] = matrix[15];
 
-	Matrix4x4 newMat, scaleMat, transMat;
+	Matrix4x4 newMat, scaleMat;
 	newMat.setMatrix(matrix4x4); 
 	scaleMat.setScale(this->localScale);
-	transMat.setTranslation(this->localPos);
-	this->localMat = scaleMat.multiply(transMat.multiply(newMat));
+	this->localMat = scaleMat.multiply(newMat);
 	this->overrideMatrix = true;
 }
 

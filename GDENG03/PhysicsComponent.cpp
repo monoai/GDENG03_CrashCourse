@@ -19,7 +19,10 @@ PhysicsComponent::PhysicsComponent(std::string name, AGameObject* owner) : AComp
 	transform.setFromOpenGL(this->getOwner()->getPhysicsLocalMatrix());
 	reactphysics3d::BoxShape* boxShape = physicsCommon->createBoxShape(reactphysics3d::Vector3(scale.getX()/2, scale.getY()/2, scale.getZ()/2));
 	this->rigidBody = physicsWorld->createRigidBody(transform);
-	this->rigidBody->addCollider(boxShape, transform);
+	reactphysics3d::Transform zeroTrans;
+	zeroTrans.setPosition(reactphysics3d::Vector3(0.0f, 0.0f, 0.0f));
+	zeroTrans.setOrientation(reactphysics3d::Quaternion::fromEulerAngles(0,0,0));
+	this->rigidBody->addCollider(boxShape, zeroTrans);
 	this->rigidBody->updateMassPropertiesFromColliders();
 	//this->rigidBody->setLocalCenterOfMass(reactphysics3d::Vector3(scale.getX()/2, scale.getY()/2, scale.getZ()/2));
 	this->rigidBody->setMass(this->mass);
