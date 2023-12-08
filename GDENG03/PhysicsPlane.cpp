@@ -63,7 +63,7 @@ PhysicsPlane::PhysicsPlane(std::string name, bool skipInit) : Cube(name, skipIni
 	cc.m_time = 0;
 	this->m_cb = GraphicsEngine::get()->createConstantBuffer(&cc, sizeof(cc));
 
-	this->setPosition(0.0f, -5.0f, 0.0f);
+	this->setPosition(0.0f, -10.0f, 0.0f);
 	this->setScale(32.0f, 0.2f, 32.0f);
 	this->setRotation(0.0f, 0.0f, 0.0f);
 	this->updateLocalMatrix();

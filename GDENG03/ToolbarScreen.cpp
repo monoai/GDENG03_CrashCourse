@@ -67,6 +67,12 @@ void ToolbarScreen::drawUI()
 					GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PHYSICS_CUBE);
 					std::cout << "created phys cube" << std::endl;
 				}
+				if (ImGui::MenuItem("Create Multiple Physics Cube")) {
+					for (int i = 0; i < 30; i++) {
+						GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PHYSICS_CUBE);
+					}
+					std::cout << "created multiple phys cube" << std::endl;
+				}
 				if (ImGui::MenuItem("Create Physics Plane")) {
 					GameObjectManager::getInstance()->createObject(AGameObject::PrimitiveType::PHYSICS_PLANE);
 					std::cout << "created phys cube" << std::endl;
@@ -91,6 +97,7 @@ void ToolbarScreen::drawUI()
 	}
 
 	else if (this->openSceneDialog->HasSelected()) {
+		GameObjectManager::getInstance()->deleteAll();
 		SceneReader reader = SceneReader(this->openSceneDialog->GetSelected().string());
 		reader.readFromFile();
 

@@ -112,6 +112,20 @@ void AGameObject::detachComponent(AComponent* component)
 	}
 }
 
+// custom function to instantly slap a phys component to an object with all the required properties
+void AGameObject::setPhysComponent(reactphysics3d::BodyType bodyType, float mass, bool gravity, bool isEnabled)
+{
+	PhysicsComponent* component = (PhysicsComponent*)this->findComponentByType(AComponent::ComponentType::Physics, "PhysicsComponent_" + this->getName());
+	if (component == NULL) {
+		component = new PhysicsComponent("PhysicsComponent_" + this->getName(), this);
+		this->attachComponent(component);
+	}
+	component->getRigidBody()->setIsActive(isEnabled);
+	component->getRigidBody()->setType(bodyType);
+	component->getRigidBody()->enableGravity(gravity);
+	component->getRigidBody()->setMass(mass);
+}
+
 AComponent* AGameObject::findComponentByName(std::string name)
 {
 	for (int i = 0; i < this->componentList.size(); i++) {
@@ -269,6 +283,7 @@ void AGameObject::restoreEditState()
 		if (component != NULL) {
 			// check the required physics values first
 			reactphysics3d::BodyType type = component->getRigidBody()->getType();
+			float mass = component->getRigidBody()->getMass();
 			bool gravity = component->getRigidBody()->isGravityEnabled();
 			bool isEnabled = component->getRigidBody()->isActive();
 			this->detachComponent(component);
@@ -276,6 +291,7 @@ void AGameObject::restoreEditState()
 
 			component = new PhysicsComponent("PhysicsComponent_" + this->getName(), this);
 			component->getRigidBody()->setType(type);
+			component->getRigidBody()->setMass(mass);
 			component->getRigidBody()->enableGravity(gravity);
 			component->getRigidBody()->setIsActive(isEnabled);
 			this->attachComponent(component);

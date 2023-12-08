@@ -73,6 +73,14 @@ int GameObjectManager::activeObjects()
 	return (size_t)this->objList.size();
 }
 
+void GameObjectManager::deleteAll()
+{
+	while(this->objList.size() != 0) {
+		int i = 0;
+		this->deleteObject(this->objList[i]);
+	}
+}
+
 void GameObjectManager::updateAll()
 {
 	for (unsigned int i = 0; i < this->objList.size(); i++) {
@@ -185,6 +193,54 @@ void GameObjectManager::createObjectFromFile(std::string name, AGameObject::Prim
 		plane->setPosition(position);
 		plane->setRotation(rotation);
 		plane->setScale(scale);
+		this->addObject(plane);
+	}
+}
+
+void GameObjectManager::createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale, reactphysics3d::BodyType bodyType, float mass, bool gravity, bool isEnabled)
+{
+	if (type == AGameObject::PrimitiveType::CUBE) {
+		Cube* cube = new Cube(name);
+		cube->setPosition(position);
+		cube->setRotation(rotation);
+		cube->setScale(scale);
+		cube->setPhysComponent(bodyType, mass, gravity, isEnabled);
+		this->addObject(cube);
+	}
+
+	else if (type == AGameObject::PrimitiveType::PLANE) {
+		Plane* plane = new Plane(name);
+		plane->setPosition(position);
+		plane->setRotation(rotation);
+		plane->setScale(scale);
+		plane->setPhysComponent(bodyType, mass, gravity, isEnabled);
+		this->addObject(plane);
+	}
+
+	else if (type == AGameObject::PrimitiveType::TEXTURED_CUBE) {
+		TexturedCube* cube = new TexturedCube(name);
+		cube->setPosition(position);
+		cube->setRotation(rotation);
+		cube->setScale(scale);
+		cube->setPhysComponent(bodyType, mass, gravity, isEnabled);
+		this->addObject(cube);
+	}
+
+	else if (type == AGameObject::PrimitiveType::PHYSICS_CUBE) {
+		PhysicsCube* cube = new PhysicsCube(name);
+		cube->setPosition(position);
+		cube->setRotation(rotation);
+		cube->setScale(scale);
+		cube->setPhysComponent(bodyType, mass, gravity, isEnabled);
+		this->addObject(cube);
+	}
+
+	else if (type == AGameObject::PrimitiveType::PHYSICS_PLANE) {
+		PhysicsPlane* plane = new PhysicsPlane(name);
+		plane->setPosition(position);
+		plane->setRotation(rotation);
+		plane->setScale(scale);
+		plane->setPhysComponent(bodyType, mass, gravity, isEnabled);
 		this->addObject(plane);
 	}
 }

@@ -1,0 +1,26 @@
+Plane_Physics
+Type: 6
+Position: 0 -10 0
+Rotation: 0 0 0
+Scale: 32 0.2 32
+Rigidbody: 1
+Bodytype: 1
+Mass: 1000
+Gravity: 1
+IsEnabled: 1
+Cube
+Type: 1
+Position: 0 1 3
+Rotation: 45 45 0
+Scale: 1 1 1
+Rigidbody: 0
+Cube (1)
+Type: 1
+Position: -2 2 1.5
+Rotation: 0 0 0
+Scale: 1 2 1.5
+Rigidbody: 1
+Bodytype: 2
+Mass: 2.5
+Gravity: 1
+IsEnabled: 1

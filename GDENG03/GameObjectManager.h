@@ -23,12 +23,14 @@ public:
 	AGameObject* findObjectByName(std::string name);
 	List getAllObjects();
 	int activeObjects();
+	void deleteAll();
 	void updateAll();
 	void renderAll(int vp_width, int vp_height);
 	void addObject(AGameObject* gameObject);
 	std::string checkName(std::string name);
 	void createObject(AGameObject::PrimitiveType type);
 	void createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale);
+	void createObjectFromFile(std::string name, AGameObject::PrimitiveType type, Vector3D position, Vector3D rotation, Vector3D scale, reactphysics3d::BodyType bodyType, float mass, bool gravity, bool isEnabled);
 	void deleteObject(AGameObject* gameObject);
 	void deleteObjectByName(std::string name);
 	void setSelectedObject(std::string name);

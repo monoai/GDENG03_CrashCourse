@@ -59,6 +59,7 @@ public:
 
 	void attachComponent(AComponent* component);
 	void detachComponent(AComponent* component);
+	void setPhysComponent(reactphysics3d::BodyType bodyType, float mass, bool gravity, bool isEnabled);
 
 	AComponent* findComponentByName(std::string name);
 	AComponent* findComponentByType(AComponent::ComponentType type, std::string);
