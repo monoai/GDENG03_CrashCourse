@@ -98,6 +98,7 @@ void ToolbarScreen::drawUI()
 
 	else if (this->openSceneDialog->HasSelected()) {
 		GameObjectManager::getInstance()->deleteAll();
+		GameObjectManager::getInstance()->setSelectedObject(NULL);
 		SceneReader reader = SceneReader(this->openSceneDialog->GetSelected().string());
 		reader.readFromFile();
 
